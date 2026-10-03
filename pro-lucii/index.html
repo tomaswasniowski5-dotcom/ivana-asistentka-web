@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pro Lucii | Technická opora od 1. listopadu</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="seznambot" content="noindex, nofollow">
+<link rel="icon" href="../img/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Paleta a typografie převzaté z prodejek luciekolarikova.cz */
+:root{
+  --plum:#751643;
+  --wine:#7b1d2a;
+  --violet:#6a1178;
+  --gold:#c29b5d;
+  --gold-l:#e6d3a8;
+  --cream:#fcf7e8;
+  --cream-2:#fff8e8;
+  --teal:#057d6f;
+  --teal-d:#024638;
+  --ink:#2b2b2b;
+  --ink-2:#424242;
+  --mute:#828282;
+  --line:#eadfc4;
+  --radius:14px;
+  --serif:'Amiri', 'Noto Serif', Georgia, serif;
+  --sans:'Plus Jakarta Sans', 'Open Sans', system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);background:#fff;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--teal)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.narrow{max-width:760px}
+.center{text-align:center}
+h1,h2,h3{text-wrap:balance;font-family:var(--serif);color:var(--plum);font-weight:700;line-height:1.15;margin:0 0 .5em}
+h2{font-size:clamp(30px,4.4vw,44px)}
+h3{font-size:26px}
+.sub{font-family:var(--sans);color:var(--violet);font-weight:500;font-size:clamp(20px,2.6vw,26px);line-height:1.35;margin:0 0 .6em}
+.caps{font-family:var(--serif);text-transform:uppercase;letter-spacing:.02em;color:var(--plum);font-size:clamp(22px,3vw,30px);line-height:1.15}
+section{padding:72px 0}
+.sect--cream{background:var(--cream)}
+.sect--gold{background:linear-gradient(180deg,#f6ecd2 0%,#fdf8ec 100%)}
+.divider{width:120px;height:2px;margin:18px auto 26px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+/* Tlačítka ve stylu MioWeb prodejek */
+.btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;text-transform:uppercase;font-weight:700;letter-spacing:.04em;font-size:15px;padding:18px 34px;border-radius:6px;box-shadow:0 6px 0 var(--teal-d),0 12px 24px rgba(2,70,56,.22);transition:transform .15s,box-shadow .15s;text-align:center;line-height:1.3}
+.btn:hover{transform:translateY(2px);box-shadow:0 4px 0 var(--teal-d),0 8px 18px rgba(2,70,56,.22)}
+.btn--block{display:block;width:100%}
+.btn--plum{background:var(--plum);box-shadow:0 6px 0 #4c0d2b,0 12px 24px rgba(117,22,67,.22)}
+.btn--plum:hover{box-shadow:0 4px 0 #4c0d2b,0 8px 18px rgba(117,22,67,.22)}
+.btnnote{font-size:14px;color:var(--mute);margin-top:14px}
+
+/* HERO */
+.hero{background:linear-gradient(180deg,#efe1bd 0%,#f8f0dc 45%,#fffaf0 100%);padding:0;overflow:hidden}
+.hero__top{text-align:center;padding:34px 20px 10px}
+.hero__top p{margin:0;font-family:var(--serif);color:var(--wine);font-size:clamp(20px,2.6vw,28px)}
+.hero__top .caps{margin-top:2px;font-size:clamp(22px,3.2vw,34px)}
+.hero__in{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:end;max-width:1080px;margin:0 auto;padding:0 20px}
+.hero__img{align-self:end}
+.hero__img img{width:100%;max-width:470px;margin:0 auto}
+.hero__card{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:var(--radius);padding:30px 30px 34px;margin-bottom:56px;text-align:center;box-shadow:0 20px 50px rgba(117,22,67,.08)}
+.hero__card .kick{font-size:16px;color:var(--ink-2);margin:0 0 14px}
+.hero__card h1{font-size:clamp(38px,5vw,56px);margin:0;text-transform:uppercase;letter-spacing:.01em}
+.hero__card .h1s{font-family:var(--serif);text-transform:uppercase;color:var(--wine);font-size:clamp(20px,2.4vw,25px);line-height:1.2;margin:6px 0 22px}
+.hero__card .btn{margin-top:4px}
+
+/* Pruh s odpočtem */
+.bar{background:var(--plum);color:#fff;padding:22px 0}
+.bar__in{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;text-align:center}
+.bar__txt{font-size:16px;max-width:420px;line-height:1.45}
+.bar__txt strong{color:var(--gold-l)}
+.cd{display:flex;gap:10px}
+.cd div{background:rgba(255,255,255,.1);border:1px solid rgba(230,211,168,.35);border-radius:10px;min-width:68px;padding:8px 6px}
+.cd b{display:block;font-family:var(--serif);font-size:32px;line-height:1;color:var(--gold-l)}
+.cd span{font-size:11px;text-transform:uppercase;letter-spacing:.08em;opacity:.8}
+
+/* Video */
+.video{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:linear-gradient(135deg,#3c0a22 0%,var(--plum) 55%,#a0577a 100%);box-shadow:0 24px 60px rgba(117,22,67,.25);border:4px solid #fff;outline:1px solid var(--gold-l)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video__ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px}
+.video__play{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;margin-bottom:18px;box-shadow:0 0 0 12px rgba(255,255,255,.15)}
+.video__play::after{content:"";border-left:26px solid var(--plum);border-top:16px solid transparent;border-bottom:16px solid transparent;margin-left:7px}
+.video__ph p{margin:0;font-family:var(--serif);font-size:24px}
+.video__ph small{opacity:.75;font-size:14px;margin-top:4px}
+.video__meta{display:flex;gap:10px 22px;justify-content:center;flex-wrap:wrap;margin-top:22px;font-size:15px;color:var(--ink-2)}
+.video__meta span::before{content:"✓ ";color:var(--teal);font-weight:700}
+
+/* Seznamy */
+.emo{list-style:none;padding:0;margin:24px 0;max-width:680px}
+.emo li{padding:8px 0 8px 40px;position:relative;font-size:18px}
+.emo li .e{position:absolute;left:0;top:7px;font-size:22px}
+.checks{list-style:none;padding:0;margin:26px auto;max-width:700px}
+.checks li{position:relative;padding:11px 0 11px 46px;border-bottom:1px dashed var(--line);font-size:18px}
+.checks li:last-child{border-bottom:0}
+.checks li::before{content:"";position:absolute;left:0;top:12px;width:28px;height:28px;border-radius:50%;background:#43aa8b url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/16px no-repeat}
+.quote{font-family:var(--serif);font-size:clamp(24px,3vw,32px);color:var(--wine);line-height:1.3;font-style:italic;margin:30px auto 0;max-width:720px}
+
+/* Karty úkolů */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:36px}
+.task{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 22px;position:relative}
+.task::before{content:"";position:absolute;left:24px;top:0;width:44px;height:3px;background:var(--gold);border-radius:0 0 3px 3px}
+.task h3{font-family:var(--sans);font-size:17px;font-weight:700;color:var(--violet);margin:6px 0 8px;line-height:1.35}
+.task p{margin:0;font-size:15.5px;color:var(--ink-2)}
+
+/* Interaktivní checklist */
+.audit{text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--radius);max-width:760px;margin:34px auto 0;box-shadow:0 18px 44px rgba(117,22,67,.07);overflow:hidden}
+.audit__head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 24px;background:var(--cream-2);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.audit__head b{font-family:var(--serif);font-size:22px;color:var(--plum);font-weight:700}
+.audit__prog{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.audit__track{width:120px;height:8px;border-radius:8px;background:#eee;overflow:hidden}
+.audit__fill{height:100%;width:0;background:var(--teal);transition:width .3s}
+.audit label{display:flex;gap:14px;align-items:flex-start;padding:15px 24px;border-bottom:1px solid #f3ecdb;cursor:pointer;transition:background .15s}
+.audit label:last-of-type{border-bottom:0}
+.audit label:hover{background:#fffcf3}
+.audit input{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;border:2px solid var(--gold);border-radius:6px;margin:2px 0 0;cursor:pointer;display:grid;place-content:center;transition:background .15s}
+.audit input:checked{background:var(--teal);border-color:var(--teal)}
+.audit input:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.audit input:checked + span{color:var(--mute)}
+.audit input:checked + span b{text-decoration:line-through;text-decoration-color:var(--gold)}
+.audit span{font-size:16px;line-height:1.5}
+.audit span b{color:var(--ink)}
+.audit__done{display:none;padding:16px 24px;background:#e9f6f1;color:var(--teal-d);font-weight:600;text-align:center}
+.audit.is-done .audit__done{display:block}
+
+/* Kdo tě provede */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:38px}
+.person{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.person__img{aspect-ratio:4/3.4;overflow:hidden;background:linear-gradient(180deg,#efe1bd,#fbf4e3)}
+.person__img img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.person__img--cut img{object-fit:contain;object-position:center bottom}
+.person__body{padding:24px 26px 28px}
+.person__role{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:700;margin:0 0 4px}
+.person h3{margin-bottom:10px}
+.person p{font-size:16px;margin:0 0 12px;color:var(--ink-2)}
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
+.stats div{flex:1;min-width:110px;background:var(--cream);border-radius:10px;padding:12px 14px;text-align:center}
+.stats strong{display:block;font-family:var(--serif);font-size:30px;line-height:1;color:var(--plum)}
+.stats span{display:block;line-height:1.3;margin-top:4px;font-size:13px;color:var(--ink-2)}
+.logos{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.logos img{height:40px;width:auto;object-fit:contain;filter:grayscale(.15)}
+
+/* Cenové karty – formát tarifů Lucky do kapsy */
+.prices{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:900px;margin:44px auto 0;align-items:stretch}
+.price{position:relative;background:#fff;border:2px solid var(--line);border-radius:18px;padding:40px 30px 30px;text-align:center;display:flex;flex-direction:column}
+.price--hot{border-color:var(--teal);box-shadow:0 24px 60px rgba(5,125,111,.15)}
+.badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--violet);color:#fff;font-size:12px;font-weight:700;letter-spacing:.12em;padding:7px 16px;border-radius:30px;white-space:nowrap}
+.price--hot .badge{background:var(--teal)}
+.price__name{font-family:var(--serif);font-size:30px;color:var(--plum);text-transform:uppercase;line-height:1.1;margin:0}
+.price__tag{font-size:14px;color:var(--mute);margin:6px 0 18px}
+.price__old{font-size:20px;color:var(--mute);text-decoration:line-through;text-decoration-color:#f40361;text-decoration-thickness:2px}
+.price__now{font-family:var(--serif);font-size:58px;line-height:1;color:var(--wine);margin:4px 0 2px}
+.price__now small{font-size:22px}
+.price__save{display:inline-block;background:#fdecef;color:#b0123f;font-weight:700;font-size:13px;padding:5px 12px;border-radius:20px;margin:10px 0 20px}
+.price__save--teal{background:#e6f4f1;color:var(--teal-d)}
+.price ul{list-style:none;padding:0;margin:0 0 26px;text-align:left;flex:1}
+.price li{position:relative;padding:8px 0 8px 30px;font-size:15.5px;border-bottom:1px solid #f4eedf}
+.price li:last-child{border-bottom:0}
+.price li::before{content:"✓";position:absolute;left:4px;top:8px;color:var(--teal);font-weight:700}
+.price li.x::before{content:"✗";color:#b0123f}
+.price__fine{font-size:12.5px;color:var(--mute);margin:12px 0 0;line-height:1.45}
+
+/* FAPI */
+.fapi{max-width:640px;margin:34px auto 0;background:#fff;border:2px dashed var(--gold);border-radius:var(--radius);padding:44px 26px;text-align:center;color:var(--ink-2)}
+.fapi b{display:block;font-family:var(--serif);font-size:26px;color:var(--plum);margin-bottom:6px}
+
+/* Lara */
+.lara{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center}
+.lara__img img{width:100%;max-width:540px;margin:0 auto}
+.lara__chip{display:inline-flex;align-items:center;gap:8px;background:#f2e8f5;color:var(--violet);font-weight:600;font-size:13px;padding:6px 14px;border-radius:30px;margin-bottom:14px}
+.lara__chip::before{content:"";width:8px;height:8px;border-radius:50%;background:#43aa8b;box-shadow:0 0 0 4px rgba(67,170,139,.2)}
+
+/* Garance */
+.guar{display:grid;grid-template-columns:170px 1fr;gap:32px;align-items:center;max-width:860px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:18px;padding:34px}
+.seal{width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,#e8cf95 0%,var(--gold) 70%,#9c7a3e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;box-shadow:inset 0 0 0 6px rgba(255,255,255,.35),0 10px 26px rgba(156,122,62,.35);font-family:var(--serif)}
+.seal b{font-size:46px;line-height:.9}
+.seal span{font-size:15px;text-transform:uppercase;letter-spacing:.06em;line-height:1.2}
+.guar h2{font-size:clamp(28px,3.6vw,38px)}
+.guar p{margin:0 0 10px;color:var(--ink-2)}
+
+/* Pro koho */
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:34px}
+.fit__col{background:#fff;border-radius:var(--radius);padding:28px;border-top:4px solid var(--teal)}
+.fit__col--no{border-top-color:var(--wine)}
+.fit__col h3{font-family:var(--sans);font-size:18px;color:var(--ink);margin-bottom:12px}
+.fit__col ul{margin:0;padding-left:20px}
+.fit__col li{margin:8px 0;font-size:16px}
+
+/* Závěr */
+.final{display:grid;grid-template-columns:300px 1fr;gap:40px;align-items:center}
+.final__img img{border-radius:50%;aspect-ratio:1;object-fit:cover;object-position:center 15%;border:6px solid #fff;box-shadow:0 0 0 2px var(--gold-l),0 20px 50px rgba(117,22,67,.15);background:linear-gradient(180deg,#efe1bd,#fbf4e3)}
+.ps{max-width:760px;margin:46px auto 0;padding:26px 30px;border-left:3px solid var(--gold);background:#fff;border-radius:0 var(--radius) var(--radius) 0;font-size:16px;color:var(--ink-2)}
+.ps b{font-family:var(--serif);color:var(--plum);font-size:20px}
+
+.foot{background:#2a1320;color:#d9c9cf;padding:34px 0;font-size:14px;text-align:center}
+.foot a{color:var(--gold-l);text-decoration:none}
+.foot p{margin:4px 0}
+
+@media (max-width:860px){
+  section{padding:56px 0}
+  .hero__in{grid-template-columns:1fr}
+  .hero__card{order:-1;margin:18px 0 0;padding:24px 20px 28px}
+  .hero__img img{max-width:340px}
+  .duo,.prices,.fit,.lara{grid-template-columns:1fr}
+  .prices{gap:36px}
+  .lara__img{order:-1}
+  .guar{grid-template-columns:1fr;text-align:center;padding:28px 22px}
+  .seal{margin:0 auto}
+  .final{grid-template-columns:1fr;text-align:center}
+  .final__img img{max-width:220px;margin:0 auto}
+  .cd div{min-width:58px}
+  .cd b{font-size:26px}
+  .btn{padding:17px 22px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero__top">
+    <p>Odpověď na tvůj inzerát, Lucie.</p>
+    <p class="caps">Technická opora, na kterou se dá spolehnout.</p>
+  </div>
+  <div class="hero__in">
+    <div class="hero__img">
+      <img src="../img/ivana-hero.png" alt="Ivana Soukupová" width="650" height="780">
+    </div>
+    <div class="hero__card">
+      <p class="kick">Specialista technické podpory a systémový koordinátor pro tým, který pomáhá desítkám tisíc žen k sebelásce a vnitřnímu klidu.</p>
+      <h1>Ivana<br>&amp;&nbsp;Tomáš</h1>
+      <p class="h1s">Hladký tok dat na pozadí.<br>Klid v hlavě na popředí.</p>
+      <a class="btn" href="#video">Chci vás poznat ještě dnes</a>
+      <p class="btnnote">2–3minutové video, přesně podle zadání</p>
+    </div>
+  </div>
+</header>
+
+<!-- ODPOČET -->
+<div class="bar">
+  <div class="wrap bar__in">
+    <p class="bar__txt">Začátek <strong>1. listopadu</strong>, zaučení klidně <strong>už zítra</strong>. Do nástupu zbývá:</p>
+    <div class="cd" id="cd" aria-live="polite">
+      <div><b data-u="d">–</b><span>dní</span></div>
+      <div><b data-u="h">–</b><span>hodin</span></div>
+      <div><b data-u="m">–</b><span>minut</span></div>
+      <div><b data-u="s">–</b><span>sekund</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO -->
+<section id="video">
+  <div class="wrap narrow center">
+    <p class="sub">Stručné představení, jak sis řekla</p>
+    <h2>Kdo jsme, co nás baví a proč zrovna ty</h2>
+    <div class="divider"></div>
+    <div class="video">
+      <!-- VIDEO: sem vložit iframe (YouTube neveřejné / Vimeo) a smazat .video__ph -->
+      <div class="video__ph">
+        <div class="video__play"></div>
+        <p>Video se právě natáčí</p>
+        <small>Doplníme sem 2–3 minuty o nás dvou</small>
+      </div>
+    </div>
+    <div class="video__meta">
+      <span>kdo jsme</span><span>jaké systémy nás baví</span><span>naše budoucí sny</span><span>proč právě ty</span>
+    </div>
+  </div>
+</section>
+
+<!-- BOLEST -->
+<section class="sect--cream">
+  <div class="wrap narrow">
+    <h2 class="center">Cítíš to? Ten tlak před kampaní…</h2>
+    <div class="divider"></div>
+    <ul class="emo">
+      <li><span class="e">😮‍💨</span>Kolegyně, která všechno znala, se loučí. A s ní odchází i kus know-how z hlavy.</li>
+      <li><span class="e">📅</span>Ve středu je kampaňová porada a někdo musí převzít termíny, ceny i celou časovou osu.</li>
+      <li><span class="e">🔗</span>Stačí jeden špatný odkaz, jeden formulář, co nepropíše, a klientka se zasekne na půli cesty.</li>
+      <li><span class="e">🤖</span>Lucka do kapsy musí běžet hladce. A AI se mezitím mění každý týden.</li>
+    </ul>
+    <p class="quote center">Potřebuješ někoho, kdo nepanikaří, když něco hoří. A ideálně zařídí, aby nehořelo vůbec.</p>
+  </div>
+</section>
+
+<!-- VIZE -->
+<section>
+  <div class="wrap narrow center">
+    <p class="sub">Představ si 1. prosinec…</p>
+    <h2>Kampaň běží jako švýcarské hodinky</h2>
+    <div class="divider"></div>
+    <ul class="checks" style="text-align:left">
+      <li>Každý odkaz sedí, každý FAPI formulář propisuje, DPH je správně.</li>
+      <li>Klientka projde od prvního kliku až po otevření členské sekce bez jediného zaváhání.</li>
+      <li>E-mailové sekvence ve SmartEmailingu odchází včas a správným lidem.</li>
+      <li>Ve středu na poradě máš na stole čísla, ne odhady.</li>
+      <li>Na konci měsíce je web vyčištěný od expirovaných stránek.</li>
+      <li>A ty se věnuješ ženám, ne technice.</li>
+    </ul>
+    <a class="btn" href="#cenik">Tohle chci od listopadu</a>
+  </div>
+</section>
+
+<!-- CO PŘEVEZMEME -->
+<section class="sect--gold">
+  <div class="wrap">
+    <div class="center">
+      <p class="sub">Celý tvůj seznam, bod po bodu</p>
+      <h2>Co u vás převezmeme</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="tasks">
+      <div class="task"><h3>Harmonogram kampaní</h3><p>Středeční porady, zadání, termíny a cenotvorba. Vedeme celou časovou osu kampaně a hlídáme, aby nic neujelo.</p></div>
+      <div class="task"><h3>Prodejní a děkovací stránky</h3><p>Převod textů do stránek v MioWebu. Typografie, vizuální harmonie, mobily, SEO. Přesně jako tahle stránka.</p></div>
+      <div class="task"><h3>FAPI a platební automaty</h3><p>Projekty, produkty, platební metody, opakované platby, DPH a napojení na bránu.</p></div>
+      <div class="task"><h3>E-mailing a automatizace</h3><p>Kampaňové, webinářové, kurzové i transakční sekvence ve SmartEmailingu.</p></div>
+      <div class="task"><h3>Členské sekce a komunity</h3><p>S předstihem připravené a zabezpečené. Uvolňování lekcí a zázemí v doprovodných skupinách.</p></div>
+      <div class="task"><h3>AI a inovace</h3><p>Hladký běh Lucky do kapsy a hledání míst, kde AI ušetří rutinu celému týmu.</p></div>
+      <div class="task"><h3>Měření a pořádek</h3><p>Týdenní i kampaňový reporting a měsíční úklid webu od starých stránek.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DŮKAZ: CHECKLIST -->
+<section>
+  <div class="wrap narrow center">
+    <p class="sub">Nespoléháme na náhodu. Vše otestujeme a proklikáme.</p>
+    <h2>Tahle stránka je sama o sobě ukázka</h2>
+    <div class="divider"></div>
+    <p>V inzerátu chceš někoho, kdo umí prodejní stránky, cenotvorbu, FAPI, Buddy a AI. Místo abychom to tvrdili, rovnou jsme to postavili. Odškrtej si to sama:</p>
+    <div class="audit" id="audit">
+      <div class="audit__head">
+        <b>Kontrolní checklist</b>
+        <div class="audit__prog"><span id="auditN">0 / 7</span><div class="audit__track"><div class="audit__fill" id="auditFill"></div></div></div>
+      </div>
+      <label><input type="checkbox"><span><b>Postaveno s AI.</b> Celou stránku jsme navrhli a nakódovali s Claude, od struktury po kód.</span></label>
+      <label><input type="checkbox"><span><b>Tvoje vizuální harmonie.</b> Písma Amiri a Plus Jakarta Sans, barvy i struktura z tvých prodejek.</span></label>
+      <label><input type="checkbox"><span><b>Responzivita.</b> Otevři si ji na mobilu. Počkáme.</span></label>
+      <label><input type="checkbox"><span><b>Cenotvorba a varianty.</b> Přeškrtnutá cena, štítky, úspora v procentech. <a href="#cenik">Mrkni níž.</a></span></label>
+      <label><input type="checkbox"><span><b>FAPI formulář.</b> Napojený přímo na stránce. <a href="#objednavka">Tady.</a></span></label>
+      <label><input type="checkbox"><span><b>AI na Buddy.</b> Konzultantka Lara, se kterou si můžeš rovnou napsat. <a href="#lara">Tady.</a></span></label>
+      <label><input type="checkbox"><span><b>Skrytá stránka.</b> Noindex, nikde neodkazovaná. Tenhle odkaz máš jen ty.</span></label>
+      <div class="audit__done">Sedm z sedmi. Takhle budeme předávat každou kampaň. ✨</div>
+    </div>
+  </div>
+</section>
+
+<!-- KDO TĚ PROVEDE -->
+<section class="sect--cream" id="my">
+  <div class="wrap">
+    <div class="center">
+      <h2>Kdo tě provede?</h2>
+      <p class="sub">Dva lidé, jedna odpovědnost za výsledek</p>
+      <div class="divider"></div>
+    </div>
+    <div class="duo">
+      <article class="person">
+        <div class="person__img person__img--cut"><img src="../img/ivana-hero.png" alt="Ivana Soukupová" loading="lazy"></div>
+        <div class="person__body">
+          <p class="person__role">Každodenní opora</p>
+          <h3>Ivana Soukupová</h3>
+          <p>Osm let budovala vlastní značku: marketing, klienti, provoz i odpovědnost za výsledek. Všechno bylo na ní. Proto chápe kontext, ne jen zadání.</p>
+          <p>Nejsilnější je v komunikaci a v tom, jak se cítí člověk na druhé straně. Umí se vcítit do ženy, která si kupuje kurz, a odstranit z její cesty tření.</p>
+          <div class="stats">
+            <div><strong>8 let</strong><span>vlastního podnikání</span></div>
+            <div><strong>100+</strong><span>vlastních klientů</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="person">
+        <div class="person__img"><img src="../img/tomas.jpg" alt="Tomáš Wasniowski" loading="lazy"></div>
+        <div class="person__body">
+          <p class="person__role">Systémy a strategie v zádech</p>
+          <h3>Tomáš Wasniowski</h3>
+          <p>Už sedmým rokem spravuje marketing expertům. Sám vybudoval dva úspěšné projekty, Jistou cestou ke zdraví a Mužskou alchymii, a víc než dva roky spolupracuje s Pavlem na BuddyPro.</p>
+          <p>Prodejní cesty, e-mailing, webináře, funnely i AI agenti jsou jeho denní chleba.</p>
+          <div class="stats">
+            <div><strong>7.</strong><span>rok v marketingu expertů</span></div>
+            <div><strong>2+</strong><span>roky na BuddyPro</span></div>
+          </div>
+          <div class="logos">
+            <img src="../img/logo-jcz.png" alt="Jistou cestou ke zdraví" loading="lazy">
+            <img src="../img/logo-ma.jpg" alt="Mužská alchymie" loading="lazy">
+            <img src="../img/logo-buddypro.svg" alt="BuddyPro" loading="lazy">
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CENÍK -->
+<section id="cenik">
+  <div class="wrap">
+    <div class="center">
+      <p class="sub">Transparentní finanční model. Jak sis přála.</p>
+      <h2>Vyber si variantu</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="prices">
+      <div class="price price--hot">
+        <span class="badge">NEJVÝHODNĚJŠÍ</span>
+        <p class="price__name">Ivanka na zkoušku</p>
+        <p class="price__tag">30 minut, které ti ušetří týdny výběrka</p>
+        <div class="price__old">2 999 Kč</div>
+        <div class="price__now">0 <small>Kč</small></div>
+        <span class="price__save">Ušetříš 100 %</span>
+        <ul>
+          <li>Nezávazný hovor s Ivanou i Tomášem najednou</li>
+          <li>Odpovíme na všechno, na co se v inzerátu ptáš</li>
+          <li>Ukážeme, jak bychom převzali první kampaň</li>
+          <li>Bonus: poznáš nás oba dřív, než se rozhodneš</li>
+        </ul>
+        <a class="btn btn--block" href="https://calendly.com/tomas-wasniowski/30min" target="_blank" rel="noopener">Zabookovat hovor</a>
+        <p class="price__fine">Původní cenu jsme si vymysleli, abychom měli co škrtat. Přesně tak, jak se to dělá.</p>
+      </div>
+      <div class="price">
+        <span class="badge">OBLÍBENÉ</span>
+        <p class="price__name">Ivanka naostro</p>
+        <p class="price__tag">Od 1. 11., cca 80 hodin měsíčně, B2B na IČO</p>
+        <div class="price__old" style="visibility:hidden">0 Kč</div>
+        <div class="price__now">700 <small>Kč / hod</small></div>
+        <span class="price__save price__save--teal">+ 15 % výkonnostní bonus</span>
+        <ul>
+          <li>Kompletní technické zázemí podle tvého seznamu</li>
+          <li>Středeční kampaňové porady a celá časová osa</li>
+          <li>Tomáš v zádech, bez příplatku</li>
+          <li>Reporting týdně i po každé kampani</li>
+          <li class="x">Panika při technické výzvě</li>
+        </ul>
+        <a class="btn btn--block btn--plum" href="#objednavka">Chci Ivanku naostro</a>
+        <p class="price__fine">Bonus je výkonnostní, takže si ho budeme muset zasloužit. To nám vyhovuje.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAPI -->
+<section class="sect--cream" id="objednavka">
+  <div class="wrap narrow center">
+    <h2>Objednávka</h2>
+    <p class="sub">Žádný formulář o dvaceti polích</p>
+    <div class="divider"></div>
+    <!-- FAPI: sem vložit embed kód formuláře a smazat .fapi placeholder -->
+    <div class="fapi">
+      <b>Sem přijde FAPI formulář</b>
+      Napojený, otestovaný a proklikaný. Doplníme ho během pár dní.
+    </div>
+  </div>
+</section>
+
+<!-- LARA / BUDDY -->
+<section id="lara">
+  <div class="wrap lara">
+    <div class="lara__img">
+      <img src="../img/lucie/lara.webp" alt="AI konzultantka Lara v Telegramu" width="1254" height="1254" loading="lazy">
+    </div>
+    <div>
+      <span class="lara__chip">Online 24/7 na Telegramu</span>
+      <h2>Máme i vlastní AI.<br>Pokecat s ní můžeš tady.</h2>
+      <p>Buddy zmiňuješ v inzerátu. Tak ti rovnou ukážeme, co na něm umíme postavit. Seznam se s <strong>Larou</strong>, AI peer konzultantkou, kterou jsme stavěli na BuddyPro.</p>
+      <p>Stejný typ nástroje jako tvoje Lucka do kapsy: osobnost, paměť, hlas značky a trial, který vede do placeného tarifu. Klikni a vyzkoušej si celou cestu na vlastní kůži.</p>
+      <a class="btn" href="https://t.me/purepantherabot?start=LARA026" target="_blank" rel="noopener">Pojďme si četovat</a>
+      <p class="btnnote">Otevře se Telegram, trial je zdarma</p>
+    </div>
+  </div>
+</section>
+
+<!-- GARANCE -->
+<section class="sect--gold">
+  <div class="wrap">
+    <div class="guar">
+      <div class="seal"><b>100%</b><span>garance<br>vrácení<br>peněz</span></div>
+      <div>
+        <h2>Nic neriskuješ</h2>
+        <p>Pokud po hovoru zjistíš, že to není ono, vrátíme ti celou zaplacenou částku. Všech 0 Kč, do koruny, bez otázek.</p>
+        <p><em>Víme však, že tuto možnost nevyužiješ.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRO KOHO -->
+<section>
+  <div class="wrap">
+    <div class="center">
+      <h2>Komu je tahle nabídka určena?</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="fit">
+      <div class="fit__col" style="background:var(--cream)">
+        <h3>Je pro tebe ideální, pokud:</h3>
+        <ul>
+          <li>chceš od 1. 11. stabilní technické zázemí bez výpadku</li>
+          <li>oceníš lidský přístup i tah na branku</li>
+          <li>chceš, aby AI pracovala pro tým, ne naopak</li>
+          <li>máš ráda, když je vše otestované dřív, než se to pustí ven</li>
+        </ul>
+      </div>
+      <div class="fit__col fit__col--no" style="background:var(--cream)">
+        <h3>Není pro tebe vhodná, pokud:</h3>
+        <ul>
+          <li>chceš všechny formuláře dál proklikávat sama</li>
+          <li>máš ráda adrenalin pět minut před spuštěním kampaně</li>
+          <li>věříš, že checklisty jsou jen pro slabé povahy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ZÁVĚR -->
+<section class="sect--cream">
+  <div class="wrap">
+    <div class="final">
+      <div class="final__img"><img src="../img/ivana-hero.png" alt="Ivana Soukupová" loading="lazy"></div>
+      <div>
+        <h2>Pojďme to probrat na hovoru</h2>
+        <p>Všechno ostatní, co tě zajímá o nás, o zkušenostech a o tom, jak bychom si rozdělili práci, si rádi řekneme osobně. Půl hodiny, my dva a ty.</p>
+        <a class="btn" href="https://calendly.com/tomas-wasniowski/30min" target="_blank" rel="noopener">Ano, chci si s vámi zavolat</a>
+        <p class="btnnote">Nebo rovnou: <a href="tel:+420603338839">603 338 839</a> (Ivana) · <a href="tel:+420774045588">774 045 588</a> (Tomáš)</p>
+      </div>
+    </div>
+    <div class="ps">
+      <b>P.S.</b> Pokud máš otázky, napiš nám. Ale jen, pokud je pro tebe tahle nabídka relevantní. 🙃 😉
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <p>Ivana Soukupová &amp; Tomáš Wasniowski · <a href="../">delegujchytre.cz</a></p>
+  <p>Stránka vznikla s pomocí AI jako odpověď na inzerát. Neindexuje se a nikde na webu není odkázaná.</p>
+</footer>
+
+<script>
+(function(){
+  // Odpočet do nástupu 1. 11. 2026 00:00 (Praha)
+  var end=new Date('2026-11-01T00:00:00+01:00').getTime();
+  var el={};['d','h','m','s'].forEach(function(k){el[k]=document.querySelector('#cd [data-u="'+k+'"]');});
+  function pad(n){return n<10?'0'+n:''+n;}
+  function tick(){
+    var t=Math.max(0,end-Date.now());
+    el.d.textContent=Math.floor(t/864e5);
+    el.h.textContent=pad(Math.floor(t/36e5)%24);
+    el.m.textContent=pad(Math.floor(t/6e4)%60);
+    el.s.textContent=pad(Math.floor(t/1e3)%60);
+  }
+  tick();setInterval(tick,1000);
+
+  // Interaktivní checklist
+  var a=document.getElementById('audit');
+  var boxes=a.querySelectorAll('input');
+  function upd(){
+    var n=0;boxes.forEach(function(b){if(b.checked)n++;});
+    document.getElementById('auditN').textContent=n+' / '+boxes.length;
+    document.getElementById('auditFill').style.width=(n/boxes.length*100)+'%';
+    a.classList.toggle('is-done',n===boxes.length);
+  }
+  boxes.forEach(function(b){b.addEventListener('change',upd);});
+})();
+</script>
+</body>
+</html>
