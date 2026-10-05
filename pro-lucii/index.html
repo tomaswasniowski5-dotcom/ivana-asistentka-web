@@ -94,6 +94,19 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 .cd b{font-family:var(--serif);font-size:24px;line-height:1;color:var(--gold-l);font-weight:700}
 .cd span{font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.55)}
 
+/* Dopis od Ivany */
+.letter{display:grid;grid-template-columns:1.35fr .65fr;gap:56px;align-items:start;margin-top:44px}
+.letter__body p{color:var(--ink-soft);margin:0 0 18px}
+.letter__body p:first-child::first-letter{font-family:var(--serif);font-size:3.4em;float:left;line-height:.8;margin:.08em .1em 0 0;color:var(--gold)}
+.letter__body strong{color:var(--ink);font-weight:600}
+.sign{font-family:var(--serif);font-style:italic;font-size:34px;color:var(--gold);margin:8px 0 0;line-height:1}
+.sign small{display:block;font-family:var(--sans);font-style:normal;font-size:13px;color:var(--ink-mute);margin-top:6px;letter-spacing:.04em}
+.facts{position:sticky;top:24px;background:#fffdf8;border:1px solid var(--line);border-radius:20px;padding:10px 26px}
+.fact{padding:18px 0;border-bottom:1px solid var(--line)}
+.fact:last-child{border-bottom:0}
+.fact b{display:block;font-family:var(--serif);font-size:30px;line-height:1.05;color:var(--gold);font-weight:700}
+.fact span{display:block;font-size:14.5px;line-height:1.45;color:var(--ink-soft);margin-top:4px}
+
 /* Bolest */
 .pains{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:40px}
 .pain{background:#fffdf8;border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;display:flex;gap:16px}
@@ -219,10 +232,11 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 
 @media (max-width:900px){
   section{padding:68px 0}
-  .pains,.vision,.duo,.prices,.fit,.lara,.final__in{grid-template-columns:1fr}
+  .letter,.pains,.vision,.duo,.prices,.fit,.lara,.final__in{grid-template-columns:1fr}
   .tasks{grid-template-columns:1fr 1fr}
   .task--wide{grid-column:span 2}
   .person--tomas{margin-top:0}
+  .facts{position:static}
   .vision{gap:30px}
   .prices{gap:36px}
   .lara__img{order:-1}
@@ -255,16 +269,11 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
     <h1>Ahoj Lucie, <em>tady jsme.</em></h1>
     <p class="lead">Ivana a Tomáš. Chtěla jsi 2–3 minuty o tom, kdo jsme, co nás baví a proč zrovna ty. Tak tady jsou.</p>
     <div class="video">
-      <!-- VIDEO: sem vložit iframe (YouTube neveřejné / Vimeo) a smazat .video__ph -->
-      <div class="video__ph">
-        <div class="video__play"></div>
-        <p>Video právě natáčíme</p>
-        <small>Brzy ho tu najdeš</small>
-      </div>
+      <iframe src="https://www.youtube-nocookie.com/embed/D30_nG-b8Dg?rel=0&modestbranding=1&playsinline=1" title="Ivana a Tomáš: představení pro Lucii" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
     <div class="hero__cta">
       <a class="btn" href="https://calendly.com/tomas-wasniowski/30min" target="_blank" rel="noopener">Zavolejme si</a>
-      <a class="btn btn--ghost" href="#pribeh">Číst dál</a>
+      <a class="btn btn--ghost" href="#proc">Číst dál</a>
     </div>
   </div>
   <div class="bar">
@@ -280,8 +289,36 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
   </div>
 </header>
 
+<!-- PROČ ZROVNA TY – dopis od Ivany -->
+<section id="proc">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">Proč zrovna ty</p>
+      <h2>Psychologie je moje vášeň. <em>Tvoje práce mi dává smysl.</em></h2>
+      <span class="brush"></span>
+    </div>
+    <div class="letter">
+      <div class="letter__body">
+        <p>Lucie, osm let jsem podnikala pod vlastní značkou v oblasti zdraví a zdravého životního stylu. Ale psychologie a všechno kolem ní byla odjakživa moje největší vášeň.</p>
+        <p>Před pěti lety mi <strong>bipolární afektivní porucha</strong> obrátila život naruby. Žiju s ní dodnes a naučila jsem se s ní tančit. Od té doby se moje zvědavost po psychologii, psychoterapii a nejnovějších výzkumech mnohonásobně prohloubila. A s ní i chuť pomáhat dál.</p>
+        <p>Dnes jsem <strong>akreditovaná peer konzultantka a peer lektorka</strong>. Chci pomáhat ženám, které se trápí s psychickými potížemi, poruchami a traumaty. Proto s týmem tvoříme i AI peer konzultantku Laru, kterou najdeš <a href="#lara">o kus níž</a>.</p>
+        <p>A tady se potkáváme. Tvoje kurzy a programy dosáhnou tam, kam se na sezení jedna na jednu fyzicky nikdy nedostaneš. <span class="hl">Tohle chci ze srdce podpořit.</span></p>
+        <p>Přes rok už dělám <strong>technickou podporu a online asistentku</strong> na Tomášových projektech: FAPI, SmartEmailing, obsah na sociální sítě. Nové věci z online byznysu, techniky a AI se učím ráda a rychle. Když v něčem vidím smysl, dávám do toho 150 % a vydržím u toho. U tebe ten smysl vidím.</p>
+        <p>A protože mám v zádech Tomáše, který online projekty staví roky, všechno bude dotažené správně. Spolu ti klidně přineseme i nové nápady a novou energii.</p>
+        <p class="sign">Ivana<small>Ivana Soukupová</small></p>
+      </div>
+      <aside class="facts">
+        <div class="fact"><b>Vlastní zkušenost</b><span>s psychickým onemocněním. Vím, jak se cítí žena na druhé straně.</span></div>
+        <div class="fact"><b>Peer konzultantka</b><span>akreditovaná, a k tomu peer lektorka</span></div>
+        <div class="fact"><b>1+ rok</b><span>technické podpory: FAPI, SmartEmailing, sociální sítě</span></div>
+        <div class="fact"><b>150 %</b><span>když v něčem vidím smysl. A u tebe ho vidím.</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
 <!-- BOLEST -->
-<section id="pribeh">
+<section class="bg-beige" id="pribeh">
   <div class="wrap">
     <div class="center">
       <p class="eyebrow">Jak to asi teď vypadá</p>
@@ -299,7 +336,7 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 </section>
 
 <!-- VIZE -->
-<section class="bg-beige">
+<section>
   <div class="wrap vision">
     <div>
       <p class="eyebrow">Teď si představ prosinec</p>
@@ -377,10 +414,11 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
         <div class="person__body">
           <span class="role">Specialistka technické podpory a systémová koordinátorka</span>
           <h3>Ivana Soukupová</h3>
-          <p>Osm let budovala vlastní značku. Marketing, klienti, provoz i odpovědnost za výsledek, všechno bylo na ní. Proto chápe souvislosti, ne jen zadání.</p>
-          <p>Nejsilnější je v komunikaci a v tom, jak se cítí člověk na druhé straně. Umí se vcítit do ženy, která si u tebe kupuje kurz, a uhladit jí cestu.</p>
+          <p>Osm let budovala vlastní značku v oblasti zdraví. Marketing, klienti, provoz i odpovědnost za výsledek, všechno bylo na ní. Přes rok dělá technickou podporu na Tomášových projektech.</p>
+          <p>Jako peer konzultantka s vlastní zkušeností ví, jak se cítí žena, která si u tebe kupuje kurz. A umí jí z cesty odklidit každé technické zaškobrtnutí.</p>
           <div class="stats">
             <div><strong>8 let</strong><span>vlastního podnikání</span></div>
+            <div><strong>1+ rok</strong><span>technické podpory</span></div>
             <div><strong>100+</strong><span>vlastních klientů</span></div>
           </div>
         </div>
@@ -391,7 +429,7 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
           <span class="role">Opora v zádech</span>
           <h3>Tomáš Wasniowski</h3>
           <p>Hlídá, aby všechno sedělo a mělo hlavu a patu. Dohlíží na Ivanin rozvoj a odpovědnost za výsledek nese s ní.</p>
-          <p>Už sedmým rokem dělá marketing expertům. Spoluvybudoval dva úspěšné projekty, Jistou cestou ke zdraví a Mužskou alchymii, a víc než dva roky spolupracuje s Pavlem na BuddyPro.</p>
+          <p>Už sedmým rokem dělá marketing expertům. Spoluvybudoval dva úspěšné projekty, Jistou cestou ke zdraví a Mužskou alchymii, a víc než dva roky spolupracuje s Pavlem na BuddyPro. Spolu s Ivanou ti klidně přinesou i nové nápady a novou energii.</p>
           <div class="logos">
             <img src="../img/logo-jcz.png" alt="Jistou cestou ke zdraví" loading="lazy">
             <img src="../img/logo-ma.jpg" alt="Mužská alchymie" loading="lazy">
@@ -472,7 +510,7 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
       <p class="eyebrow">Buddy</p>
       <h2>S Buddym pracujeme <em>každý den</em></h2>
       <span class="brush"></span>
-      <p>Lucka do kapsy je tvoje AI, o kterou se bude nový člověk starat. Tak ať nemusíš věřit jen slovům: tohle je <strong>Lara</strong>, AI konzultantka, kterou stavíme a spravujeme na BuddyPro.</p>
+      <p>Lucka do kapsy je tvoje AI, o kterou se bude nový člověk starat. Tak ať nemusíš věřit jen slovům: tohle je <strong>Lara</strong>, AI peer konzultantka a mentorka, kterou s týmem tvoříme a spravujeme na BuddyPro. Je to Ivanina srdcovka: pomáhat ženám s psychickými potížemi.</p>
       <p>Napiš jí a projdi si celou cestu sama, od prvního kliknutí přes trial až po rozhovor.</p>
       <span class="chip">Online na Telegramu</span><br>
       <a class="btn" href="https://t.me/purepantherabot?start=LARA026" target="_blank" rel="noopener">Napsat Laře</a>
