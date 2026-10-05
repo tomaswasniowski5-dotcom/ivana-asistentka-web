@@ -188,9 +188,47 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 .price li::before{content:"";position:absolute;left:2px;top:17px;width:14px;height:8px;border:solid var(--gold);border-width:0 0 2px 2px;transform:rotate(-45deg)}
 .price__fine{font-size:12.5px;color:var(--ink-mute);margin:14px 0 0;line-height:1.5}
 
-/* FAPI */
-.fapi{max-width:640px;margin:36px auto 0;background:#fffdf8;border:1.5px dashed var(--gold);border-radius:var(--radius);padding:48px 26px;text-align:center;color:var(--ink-soft)}
-.fapi b{display:block;font-family:var(--serif);font-size:28px;color:var(--ink);margin-bottom:6px}
+/* FAPI – formulář sladěný se stránkou */
+.fapi{max-width:680px;margin:40px auto 0;background:#fffdf8;border:1px solid var(--line);border-radius:22px;padding:34px 34px 22px;text-align:left;box-shadow:0 30px 70px rgba(46,33,25,.08)}
+.fapi .fapi-order-form{
+  max-width:none!important;margin:0!important;font-family:var(--sans)!important;
+  --background-color:transparent!important;--font-size:16px!important;--color:#2e2119!important;
+  --input-color:#b8933f!important;--sale-color:#9a7a30!important;
+  --container-header-background-color:transparent!important;--container-header-font-size:24px!important;
+  --container-header-color:#2e2119!important;--container-header-border-radius:0px!important;
+  --submit-button-border-radius:8px!important;--submit-button-background-color:#b8933f!important;
+  --submit-button-text-color:#ffffff!important;--submit-button-font-size:14px!important;
+}
+.fapi .fapi-order-form *{font-family:var(--sans)}
+.fapi form.f-border{border:0!important}
+.fapi .fapi-form-basic-block{margin-bottom:10px}
+.fapi .fapi-container-header{background:none!important;padding:6px 0 10px!important;border-bottom:1px solid var(--line);margin-bottom:6px}
+.fapi .fapi-container-header,.fapi .fapi-container-header *{font-family:var(--serif)!important;font-weight:700!important;font-size:24px!important;color:var(--ink)!important;text-align:left!important}
+.fapi .f-p-6{padding:18px 0!important}
+.fapi .fapi-form-basic-data,.fapi .fapi-form-payment-methods{padding-left:0!important;padding-right:0!important}
+.fapi .product-row{background:var(--cream);border:1.5px solid var(--gold);border-radius:12px;padding:16px 18px}
+.fapi .product-row label,.fapi .product-row .f-inline{font-weight:600;color:var(--ink)}
+.fapi .fapi-form-item-price{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--ink)}
+.fapi label{color:var(--ink-soft);font-size:14.5px}
+.fapi .f-form-input,.fapi .fapi-form-default-input-country button{border:1px solid rgba(184,147,63,.35)!important;border-radius:10px!important;background:#fff!important;padding-top:10px!important;padding-bottom:10px!important;color:var(--ink)!important;box-shadow:none!important;transition:border-color .15s,box-shadow .15s}
+.fapi .f-form-input{min-height:46px}
+.fapi .fapi-form-default-input-country .f-form-input,.fapi .fapi-form-default-input-country button{min-height:46px}
+.fapi .fapi-form-basic-data .sm\:f-flex{align-items:center}
+.fapi .fapi-form-basic-data label{padding-top:0!important}
+.fapi .f-form-input:focus{border-color:var(--gold)!important;box-shadow:0 0 0 4px rgba(184,147,63,.15)!important;outline:none!important}
+.fapi .f-form-radio,.fapi .f-form-checkbox{color:var(--gold)!important;border-color:var(--gold)!important}
+.fapi .f-form-radio:checked,.fapi .f-form-checkbox:checked{background-color:var(--gold)!important}
+.fapi .fapi-form-payment-method > div{border:1px solid rgba(184,147,63,.3)!important;border-radius:12px!important;box-shadow:none!important;background:#fff!important}
+.fapi .fapi-form-payment-method > div:hover{border-color:var(--gold)!important}
+.fapi .fapi-form-payment-method > div.payment-method-selected{border:2px solid var(--gold)!important;background:var(--cream)!important;box-shadow:0 10px 24px rgba(154,122,48,.15)!important}
+.fapi .fapi-form-result{border-top:1px solid var(--line);padding-top:18px}
+.fapi .fapi-form-prices-repayment-with-vat-value,.fapi .fapi-form-prices [class*="-value"]{font-family:var(--serif)!important;font-size:30px!important;font-weight:700;color:var(--ink)!important}
+.fapi .fapi-submit-button{width:100%;background:linear-gradient(180deg,#c7a24e 0%,var(--gold) 45%,var(--gold-d) 100%)!important;color:#fff!important;text-transform:uppercase;letter-spacing:.12em;font-weight:600!important;font-size:14px!important;padding:20px 24px!important;border-radius:8px!important;border:0!important;box-shadow:0 10px 26px rgba(154,122,48,.28),inset 0 1px 0 rgba(255,255,255,.25)!important;transition:transform .18s,box-shadow .18s;cursor:pointer}
+.fapi .fapi-submit-button:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(154,122,48,.34)!important}
+.fapi .fapi-submit-button:focus{--tw-ring-color:rgba(184,147,63,.3)}
+/* plovoucí cenovka FAPI by na mobilu překrývala zbytek stránky */
+.fapi-float-price-container{display:none!important}
+@media (max-width:620px){.fapi{padding:24px 18px 16px;border-radius:18px}}
 
 /* Lara */
 .lara{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
@@ -490,12 +528,10 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 <section id="objednavka">
   <div class="wrap narrow center">
     <p class="eyebrow">Objednávka</p>
-    <h2>A tady by byl <em>formulář</em></h2>
+    <h2>A tady je <em>formulář</em></h2>
     <span class="brush"></span>
-    <!-- FAPI: sem vložit embed kód formuláře a smazat .fapi placeholder -->
     <div class="fapi">
-      <b>Sem přijde FAPI formulář</b>
-      Napojený, otestovaný a proklikaný. Doplním ho během pár dní.
+      <script type="text/javascript" src="https://form.fapi.cz/script.php?id=e330f926-2faf-4ab2-9aef-2b439155c7d8"></script>
     </div>
   </div>
 </section>
