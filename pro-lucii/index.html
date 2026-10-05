@@ -64,6 +64,7 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 .btn--ghost{background:transparent;color:var(--gold-d);box-shadow:inset 0 0 0 1.5px var(--gold)}
 .btn--ghost:hover{background:rgba(184,147,63,.08);box-shadow:inset 0 0 0 1.5px var(--gold)}
 .btn--block{display:flex;width:100%}
+.nw{white-space:nowrap}
 .btnnote{font-size:13.5px;color:var(--ink-mute);margin:14px 0 0}
 
 /* HERO s videem */
@@ -97,7 +98,6 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 /* Dopis od Ivany */
 .letter{display:grid;grid-template-columns:1.35fr .65fr;gap:56px;align-items:start;margin-top:44px}
 .letter__body p{color:var(--ink-soft);margin:0 0 18px}
-.letter__body p:first-child::first-letter{font-family:var(--serif);font-size:3.4em;float:left;line-height:.8;margin:.08em .1em 0 0;color:var(--gold)}
 .letter__body strong{color:var(--ink);font-weight:600}
 .sign{font-family:var(--serif);font-style:italic;font-size:34px;color:var(--gold);margin:8px 0 0;line-height:1}
 .sign small{display:block;font-family:var(--sans);font-style:normal;font-size:13px;color:var(--ink-mute);margin-top:6px;letter-spacing:.04em}
@@ -158,7 +158,7 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 .person__img{aspect-ratio:4/3;overflow:hidden}
 .person__img img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
 .person__body{padding:30px 32px 34px}
-.role{display:inline-block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--gold-d);background:var(--gold-xl);padding:7px 14px;border-radius:30px;margin:0 0 14px}
+.role{display:inline-block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--gold-d);background:var(--gold-xl);padding:8px 14px;border-radius:10px;margin:0 0 14px;line-height:1.45}
 .person h3{font-size:34px;margin-bottom:12px}
 .person p{font-size:16px;margin:0 0 12px;color:var(--ink-soft)}
 .stats{display:flex;gap:12px;margin-top:20px}
@@ -294,6 +294,19 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
   .btn{padding:18px 22px;font-size:13px;letter-spacing:.1em}
   .hero__cta .btn{width:100%}
   .person__body{padding:26px 22px 28px}
+  .lead{font-size:17px}
+  .task{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:baseline;padding:20px 20px 18px}
+  .task__ico{margin:0;font-size:14px}
+  .task h3{font-size:22px;margin-bottom:4px}
+  .task p{grid-column:1 / -1}
+  .task--wide{display:block;padding:22px 20px}
+  .tasks{gap:12px}
+  .role{font-size:11px;letter-spacing:.1em}
+  .audit__head{padding:16px 18px}
+  .audit label{padding:14px 18px}
+  .pain{padding:20px}
+  .fit__col{padding:24px 22px}
+  .final__txt .btnnote{line-height:1.8}
   .price{padding:40px 22px 28px}
 }
 </style>
@@ -304,8 +317,8 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
 <header class="hero" id="top">
   <div class="wrap center">
     <p class="eyebrow">Odpověď na tvůj inzerát</p>
-    <h1>Ahoj Lucie, <em>tady jsem.</em></h1>
-    <p class="lead">Ivana. Chtěla jsi 2–3 minuty o tom, kdo jsem, co mě baví a proč zrovna ty. Tak tady jsou. Ve videu je se mnou i Tomáš, moje opora v zádech.</p>
+    <h1>Ahoj Lucie, <em>místo životopisu mám pro tebe stránku.</em></h1>
+    <p class="lead">Postavila jsem ji ve tvých písmech a tvojí zlaté a ukazuje všechno technické, co v inzerátu hledáš. Začni videem: pár minut o tom, kdo jsem, co mě baví a proč zrovna ty. Je v něm se mnou i Tomáš. Proč, to pochopíš z videa.</p>
     <div class="video">
       <iframe src="https://www.youtube-nocookie.com/embed/D30_nG-b8Dg?rel=0&modestbranding=1&playsinline=1" title="Ivana a Tomáš: představení pro Lucii" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
@@ -339,7 +352,7 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
       <div class="letter__body">
         <p>Lucie, osm let jsem podnikala pod vlastní značkou v oblasti masérství a zdravého životního stylu. Ale psychologie a všechno kolem ní byla odjakživa moje největší vášeň.</p>
         <p>Před pěti lety mi <strong>bipolární afektivní porucha</strong> obrátila život naruby. Žiju s ní dodnes a naučila jsem se s ní tančit. Od té doby se moje zvědavost po psychologii, psychoterapii a nejnovějších výzkumech mnohonásobně prohloubila. A s ní i chuť pomáhat dál.</p>
-        <p>Dnes jsem <strong>akreditovaná peer konzultantka a peer lektorka</strong>. Chci pomáhat ženám, které se trápí s psychickými potížemi, poruchami a traumaty. Proto s týmem tvořím i AI peer mentorku Laru, kterou najdeš <a href="#lara">o kus níž</a>.</p>
+        <p>Dnes jsem <strong>akreditovaná peer konzultantka a peer lektorka</strong>. Chci pomáhat ženám, které se trápí s psychickými potížemi, poruchami a traumaty. Proto s Tomášem tvoříme i AI peer mentorku Laru, kterou najdeš <a href="#lara">o kus níž</a>.</p>
         <p>A tady se potkáváme. Tvoje kurzy a programy dosáhnou tam, kam se na sezení jedna na jednu fyzicky nikdy nedostaneš. <span class="hl">Tohle chci ze srdce podpořit.</span></p>
         <p>Přes rok koukám Tomášovi <strong>přes rameno</strong> a vidím celou operativu jeho projektů zblízka. V posledních měsících od něj <strong>přebírám první úkoly a procesy</strong> a zaučuju se ve FAPI, SmartEmailingu i dalších nástrojích. Nové věci z online byznysu, techniky a AI se učím ráda a rychle. Když v něčem vidím smysl, dávám do toho 150 % a vydržím u toho. U tebe ten smysl vidím.</p>
         <p>A protože mám v zádech Tomáše, který online projekty staví roky, všechno bude dotažené správně. A s jeho zkušenostmi ti klidně přinesu i nové nápady a novou energii.</p>
@@ -546,7 +559,7 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
       <p class="eyebrow">Buddy</p>
       <h2>Buddyho znám <em>z vlastní praxe</em></h2>
       <span class="brush"></span>
-      <p>Lucka do kapsy je tvoje AI, o kterou se budu starat. Tak ať nemusíš věřit jen slovům: tohle je <strong>Lara</strong>, AI peer mentorka, kterou s týmem tvořím na BuddyPro. Je to moje srdcovka: pomáhat ženám s psychickými potížemi.</p>
+      <p>Lucka do kapsy je tvoje AI, o kterou se budu starat. Tak ať nemusíš věřit jen slovům: tohle je <strong>Lara</strong>, AI peer mentorka, kterou s Tomášem tvoříme na platformě BuddyPro. Je to moje srdcovka: pomáhat ženám s psychickými potížemi.</p>
       <p>Napiš jí a projdi si celou cestu sama, od prvního kliknutí přes trial až po rozhovor.</p>
       <span class="chip">Online na Telegramu</span><br>
       <a class="btn" href="https://t.me/purepantherabot?start=LARA026" target="_blank" rel="noopener">Napsat Laře</a>
@@ -594,7 +607,7 @@ h2 em,h1 em{font-style:normal;color:var(--gold)}
       <span class="brush"></span>
       <p>Zbytek si ráda řeknu osobně. Kdo jsem, co umím a jak bych převzala tvoje kampaně. Půl hodiny, ty a já. A Tomáš klidně u toho.</p>
       <a class="btn" href="https://calendly.com/tomas-wasniowski/30min" target="_blank" rel="noopener">Zabookovat hovor</a>
-      <p class="btnnote">Nebo rovnou volej: <a href="tel:+420603338839">603 338 839</a> (Ivana) · <a href="tel:+420774045588">774 045 588</a> (Tomáš)</p>
+      <p class="btnnote">Nebo rovnou volej: <span class="nw"><a href="tel:+420603338839">603 338 839</a> (Ivana)</span> · <span class="nw"><a href="tel:+420774045588">774 045 588</a> (Tomáš)</span></p>
       <p class="ps"><b>P.S.</b> Video, formulář i Laru jsem pro tebe chystala s radostí. Teď už jen stačí si to říct do očí.</p>
     </div>
   </div>
