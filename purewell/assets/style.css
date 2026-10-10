@@ -329,9 +329,6 @@ details.expert .body h4:first-child { margin-top: 0; }
 .offer:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 16px 36px -20px rgba(44,34,27,.4); }
 .offer-photo { position: relative; display: block; aspect-ratio: 4/5; overflow: hidden; }
 .offer-photo img { width: 100%; height: 100%; object-fit: cover; }
-.offer-photo::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(to bottom, transparent, rgba(30,22,16,.75)); }
-.offer-chips { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: flex; flex-wrap: wrap; gap: 6px; }
-.offer-chips span { font-size: 12.5px; font-weight: 500; color: var(--espresso); background: rgba(251,247,240,.92); border-radius: 999px; padding: 5px 11px; }
 .offer-body { padding: 22px 22px 18px; display: flex; flex-direction: column; flex: 1; }
 .offer-body h3 { font-size: 27px; margin-bottom: 14px; }
 .offer-body h3 a { color: var(--espresso); text-decoration: none; }
@@ -344,11 +341,7 @@ details.expert .body h4:first-child { margin-top: 0; }
 .offer-list .arr { color: var(--gold); }
 .offer-list a:hover { color: var(--gold-deep); }
 @media (max-width: 860px) { .offers { grid-template-columns: 1fr; gap: 28px; } .offer-photo { aspect-ratio: 4/3; } }
-.tn-label { position: absolute; left: 14px; z-index: 1; font-family: var(--caps); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--cream); background: rgba(44,34,27,.7); border-radius: 999px; padding: 4px 11px; }
-.tn-label.top { top: 14px; }
-.tn-label.mid { top: calc(50% + 6px); }
 @media (max-width: 860px) { .offer-photo.tall { aspect-ratio: 4/5; } }
 /* štítky pod fotkou, v barvě loga */
-.offer-photo::after { display: none; }
-.offer-body .offer-chips { position: static; display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-.offer-body .offer-chips span { font-size: 12.5px; font-weight: 500; color: var(--gold-deep); background: rgba(176,138,82,.12); border: 1px solid var(--gold-soft); border-radius: 999px; padding: 4px 11px; }
+.offer-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.offer-chips span { font-size: 12.5px; font-weight: 500; color: #7a5a2e; background: #efe2cb; border: 1px solid #dcc59e; border-radius: 999px; padding: 4px 11px; }
