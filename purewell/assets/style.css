@@ -313,3 +313,12 @@ details.expert .body h4:first-child { margin-top: 0; }
 /* Filozofie – podtitulek a společný začátek */
 .tagline { font-family: var(--serif); font-style: italic; font-size: clamp(22px, 3vw, 28px); color: #d2b17c; margin-top: -4px; }
 .philo-lead { font-family: var(--serif); font-size: clamp(30px, 4vw, 38px); color: var(--cream); margin: 8px 0 22px; }
+
+/* Karta služby – krátká verze s „okýnky“ */
+.card-promise { font-size: 15.5px; color: var(--ink); margin: 6px 0 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12.5px; font-weight: 500; color: var(--ink); background: var(--linen); border: 1px solid var(--gold-soft); border-radius: 999px; padding: 4px 11px; }
+.chip.gold { color: var(--gold-deep); background: transparent; border-color: var(--gold); }
+.chips-label { font-family: var(--caps); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin: 14px 0 7px; }
+.card-btn { display: block; margin-top: 20px; text-align: center; background: var(--espresso); color: var(--cream); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 14px 16px; border-radius: 999px; transition: background .2s; }
+.card:hover .card-btn { background: var(--gold-deep); }
