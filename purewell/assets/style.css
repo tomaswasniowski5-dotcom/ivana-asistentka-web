@@ -344,3 +344,7 @@ details.expert .body h4:first-child { margin-top: 0; }
 .offer-list .arr { color: var(--gold); }
 .offer-list a:hover { color: var(--gold-deep); }
 @media (max-width: 860px) { .offers { grid-template-columns: 1fr; gap: 28px; } .offer-photo { aspect-ratio: 4/3; } }
+.tn-label { position: absolute; left: 14px; z-index: 1; font-family: var(--caps); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--cream); background: rgba(44,34,27,.7); border-radius: 999px; padding: 4px 11px; }
+.tn-label.top { top: 14px; }
+.tn-label.mid { top: calc(50% + 6px); }
+@media (max-width: 860px) { .offer-photo.tall { aspect-ratio: 4/5; } }
