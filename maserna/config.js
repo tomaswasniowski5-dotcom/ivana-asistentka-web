@@ -2,8 +2,8 @@
 // Dokud jsou supabaseUrl/supabaseKey prázdné, běží kalendář v demo režimu
 // (rezervace se ukládají jen v tomhle prohlížeči).
 window.MASERNA_CONFIG = {
-  supabaseUrl: "",
-  supabaseKey: "", // veřejný "anon" klíč (ne service_role!)
+  supabaseUrl: "https://gqevdowipgxsnrygnhbo.supabase.co",
+  supabaseKey: "sb_publishable_yyUu60XklFSBZ-zevWHqag_AkTNWb57", // veřejný klíč: "publishable" (sb_publishable_…) nebo legacy "anon" (eyJ…), nikdy secret/service_role!
 
   // Kdo si masérnu bookuje – jméno a barva v kalendáři.
   people: [

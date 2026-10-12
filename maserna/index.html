@@ -236,7 +236,8 @@
     const base = CFG.supabaseUrl.replace(/\/$/, "") + "/rest/v1/bookings";
     const headers = {
       apikey: CFG.supabaseKey,
-      Authorization: "Bearer " + CFG.supabaseKey,
+      // legacy anon klíč (JWT) se posílá i jako Bearer, nový publishable klíč stačí v apikey
+      ...(CFG.supabaseKey.startsWith("eyJ") ? { Authorization: "Bearer " + CFG.supabaseKey } : {}),
       "Content-Type": "application/json",
       Prefer: "return=representation",
     };
