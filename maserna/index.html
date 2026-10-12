@@ -4,24 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Masérna – rezervace</title>
+<title>Masérna El Guapo – rezervace</title>
+<link rel="icon" href="elguapo-logo.png">
+<link rel="apple-touch-icon" href="elguapo-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Marcellus&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Marcellus&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream: #fbf7f0;
     --linen: #f4ece0;
-    --sand: #e9dcc8;
-    --line: #ece3d6;
-    --line-strong: #dccdb7;
+    --line: #e7dccd;
+    --line-strong: #d6c6ae;
     --espresso: #2c221b;
     --ink: #3a2f26;
-    --muted: #74665a;
+    --muted: #6f6155;
     --gold: #b08a52;
     --gold-deep: #8e6c3c;
     --now: #c0392b;
-    --hour: 48px;
+    --hour: 52px;
     --gutter: 56px;
   }
   * { box-sizing: border-box; }
@@ -32,47 +33,57 @@
     background: var(--cream);
     display: flex; flex-direction: column;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+  /* vybledlá fotka masérny za kalendářem */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1;
+    background: linear-gradient(rgba(251,247,240,.74), rgba(251,247,240,.82)), url("maserna-foto.webp") center 40% / cover no-repeat;
   }
   button { font: inherit; color: inherit; cursor: pointer; }
 
-  /* ---------- horní lišta ---------- */
-  .bar {
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    padding: 12px 16px; border-bottom: 1px solid var(--line);
-    background: var(--cream);
+  /* ---------- hlavička s fotkou a logem ---------- */
+  .hero {
+    position: relative; color: #fff; padding: 14px 16px;
+    display: flex; align-items: center; gap: 14px;
+    background: linear-gradient(90deg, rgba(30,22,16,.88), rgba(30,22,16,.55)), url("maserna-foto.webp") center 62% / cover no-repeat;
   }
-  .brand { font-family: Marcellus, serif; font-size: 22px; color: var(--espresso); margin-right: 8px; white-space: nowrap; }
-  .btn {
-    border: 1px solid var(--line-strong); background: #fff; border-radius: 999px;
-    padding: 7px 16px; font-weight: 600; font-size: 14px;
-  }
+  .hero img { width: 58px; height: 58px; border-radius: 50%; flex: none; box-shadow: 0 0 0 2px rgba(255,255,255,.85); }
+  .hero h1 { font-family: Marcellus, serif; font-weight: 400; font-size: 26px; margin: 0; line-height: 1.1; }
+  .hero .sub { font-size: 13px; opacity: .85; letter-spacing: .04em; }
+  .hero .spacer { flex: 1; }
+  .me { display: flex; align-items: center; gap: 10px; font-size: 15px; text-align: right; }
+  .me .who { font-weight: 700; }
+  .me .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: -1px; box-shadow: 0 0 0 2px #fff; }
+  .me button { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.5); color: #fff; border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 600; }
+  .me button:hover { background: rgba(255,255,255,.25); }
+
+  /* ---------- ovládání ---------- */
+  .bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid var(--line); background: rgba(251,247,240,.92); }
+  .btn { border: 1px solid var(--line-strong); background: #fff; border-radius: 12px; padding: 9px 16px; font-weight: 700; font-size: 15px; white-space: nowrap; }
   .btn:hover { background: var(--linen); }
-  .icon-btn {
-    width: 36px; height: 36px; border-radius: 50%; border: 0; background: transparent;
-    display: inline-grid; place-items: center; font-size: 20px; color: var(--muted);
-  }
-  .icon-btn:hover { background: var(--linen); color: var(--espresso); }
-  .range { font-size: 19px; font-weight: 600; color: var(--espresso); white-space: nowrap; }
-  .spacer { flex: 1; }
-  .seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 999px; overflow: hidden; background: #fff; }
-  .seg button { border: 0; background: transparent; padding: 7px 14px; font-weight: 600; font-size: 14px; }
-  .seg button + button { border-left: 1px solid var(--line-strong); }
-  .seg button.on { background: var(--espresso); color: var(--cream); }
   .btn-primary { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
   .btn-primary:hover { background: #45362b; }
+  .btn-big { padding: 12px 20px; font-size: 16px; }
+  .nav { display: flex; gap: 6px; }
+  .range { font-size: 19px; font-weight: 800; color: var(--espresso); }
+  .spacer { flex: 1; }
+  .seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 12px; overflow: hidden; background: #fff; }
+  .seg button { border: 0; background: transparent; padding: 9px 16px; font-weight: 700; font-size: 15px; }
+  .seg button + button { border-left: 1px solid var(--line-strong); }
+  .seg button.on { background: var(--espresso); color: var(--cream); }
 
-  .legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 8px 16px; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--line); align-items: center; }
-  .legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: -1px; }
-  .demo { background: #fff4d6; color: #6b5310; padding: 6px 16px; font-size: 13px; border-bottom: 1px solid #f0dfa8; }
-  .demo:empty { display: none; }
+  .info { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; padding: 8px 16px; font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--line); background: rgba(251,247,240,.8); }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-weight: 600; color: var(--ink); }
+  .legend .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: -1px; }
 
   /* ---------- časová mřížka (den / týden) ---------- */
   .main { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-  .tg-head { display: flex; border-bottom: 1px solid var(--line); background: var(--cream); padding-right: var(--sbw, 0px); }
+  .tg-head { display: flex; border-bottom: 1px solid var(--line); background: rgba(251,247,240,.92); padding-right: var(--sbw, 0px); }
   .tg-head .gut { width: var(--gutter); flex: none; }
-  .dh { flex: 1; min-width: 0; text-align: center; padding: 8px 0 10px; cursor: pointer; border-left: 1px solid transparent; }
-  .dh .wd { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
-  .dh .dn { font-size: 24px; width: 42px; height: 42px; line-height: 42px; margin: 2px auto 0; border-radius: 50%; color: var(--espresso); }
+  .dh { flex: 1; min-width: 0; text-align: center; padding: 6px 0 8px; cursor: pointer; }
+  .dh .wd { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 700; }
+  .dh .dn { font-size: 22px; font-weight: 600; width: 40px; height: 40px; line-height: 40px; margin: 2px auto 0; border-radius: 50%; color: var(--espresso); }
   .dh.today .wd { color: var(--gold-deep); }
   .dh.today .dn { background: var(--gold); color: #fff; }
   .dh:hover .dn { background: var(--linen); }
@@ -81,122 +92,188 @@
   .tg-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; position: relative; }
   .tg-body { display: flex; position: relative; height: calc(var(--hour) * 24); user-select: none; -webkit-user-select: none; }
   .tg-body .gut { width: var(--gutter); flex: none; position: relative; }
-  .hl { position: absolute; right: 8px; font-size: 11px; color: var(--muted); transform: translateY(-50%); }
-  .col { flex: 1; min-width: 0; position: relative; border-left: 1px solid var(--line);
-    background-image: linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-    background-size: 100% var(--hour);
+  .hl { position: absolute; right: 8px; font-size: 12px; font-weight: 600; color: var(--muted); transform: translateY(-50%); }
+  .col { flex: 1; min-width: 0; position: relative; border-left: 1px solid var(--line); cursor: pointer;
+    background-color: rgba(255,255,255,.6);
+    background-image: linear-gradient(to bottom, var(--line) 1px, transparent 1px), linear-gradient(to bottom, rgba(231,220,205,.45) 1px, transparent 1px);
+    background-size: 100% var(--hour), 100% calc(var(--hour) / 2);
   }
-  .col.past { background-color: rgba(233, 220, 200, .18); }
-  .col.today { background-color: rgba(176, 138, 82, .05); }
+  .col.past { background-color: rgba(240,232,220,.6); }
+  .col.today { background-color: rgba(255,250,240,.85); }
 
   .ev {
-    position: absolute; left: 2px; right: 6px; border-radius: 6px; padding: 3px 7px;
-    color: #fff; font-size: 12px; line-height: 1.3; overflow: hidden; cursor: grab;
-    box-shadow: 0 0 0 1px rgba(255,255,255,.9); touch-action: none;
+    position: absolute; left: 3px; right: 6px; border-radius: 8px; padding: 4px 8px;
+    color: #fff; font-size: 13px; line-height: 1.3; overflow: hidden; cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.9), 0 1px 3px rgba(44,34,27,.2);
   }
-  .ev:active { cursor: grabbing; }
-  .ev .who { font-weight: 700; }
-  .ev .when, .ev .note { opacity: .92; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ev.mine { cursor: grab; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--espresso), 0 2px 6px rgba(44,34,27,.3); }
+  .ev.mine:active { cursor: grabbing; }
+  .ev .who { font-weight: 800; }
+  .ev .tag { display: inline-block; background: rgba(255,255,255,.95); color: var(--espresso); font-size: 10px; font-weight: 800; letter-spacing: .06em; border-radius: 4px; padding: 0 4px; margin-left: 4px; vertical-align: 1px; }
+  .ev .when, .ev .note { opacity: .95; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ev.short { padding-top: 1px; padding-bottom: 1px; }
-  .ev.short .who, .ev.short .when { display: inline; }
+  .ev.short > div { display: inline; }
   .ev.short .when { margin-left: 4px; }
-  .ev.dragging { opacity: .85; box-shadow: 0 6px 18px rgba(44,34,27,.3); z-index: 5; }
+  .ev.short .note { display: none; }
+  .ev.dragging { opacity: .85; z-index: 5; }
   .ev .rs { position: absolute; left: 0; right: 0; bottom: 0; height: 8px; cursor: ns-resize; }
-  .ghost { position: absolute; left: 2px; right: 6px; border-radius: 6px; background: rgba(44,34,27,.18); border: 1px dashed var(--espresso); font-size: 12px; padding: 3px 7px; color: var(--espresso); font-weight: 600; pointer-events: none; }
+  .ghost { position: absolute; left: 3px; right: 6px; border-radius: 8px; background: rgba(44,34,27,.15); border: 2px dashed var(--espresso); font-size: 13px; padding: 3px 8px; color: var(--espresso); font-weight: 700; pointer-events: none; }
 
   .now { position: absolute; left: -1px; right: 0; height: 2px; background: var(--now); z-index: 4; pointer-events: none; }
   .now::before { content: ""; position: absolute; left: -5px; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--now); }
 
   /* ---------- měsíc ---------- */
-  .mh { display: grid; grid-template-columns: repeat(7, 1fr); border-bottom: 1px solid var(--line); }
-  .mh div { text-align: center; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; padding: 8px 0; }
-  .mg { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 1fr; min-height: 0; overflow-y: auto; }
-  .mc { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 4px; min-height: 92px; overflow: hidden; cursor: pointer; }
-  .mc.other { background: rgba(233, 220, 200, .25); }
+  .mh { display: grid; grid-template-columns: repeat(7, 1fr); border-bottom: 1px solid var(--line); background: rgba(251,247,240,.92); }
+  .mh div { text-align: center; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 700; padding: 8px 0; }
+  .mg { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: minmax(92px, 1fr); min-height: 0; overflow-y: auto; }
+  .mc { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 4px; overflow: hidden; cursor: pointer; background: rgba(255,255,255,.72); }
+  .mc.other { background: rgba(240,232,220,.55); }
   .mc.other .md { color: var(--muted); opacity: .7; }
-  .md { font-size: 13px; font-weight: 600; text-align: center; width: 26px; height: 26px; line-height: 26px; margin: 0 auto 2px; border-radius: 50%; }
+  .md { font-size: 14px; font-weight: 700; text-align: center; width: 28px; height: 28px; line-height: 28px; margin: 0 auto 2px; border-radius: 50%; }
   .mc.today .md { background: var(--gold); color: #fff; }
-  .chip { display: block; width: 100%; text-align: left; border: 0; border-radius: 4px; color: #fff; font-size: 12px; padding: 2px 6px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .more { font-size: 12px; color: var(--muted); padding: 2px 6px; }
+  .chip { display: block; width: 100%; text-align: left; border: 0; border-radius: 5px; color: #fff; font-size: 12px; font-weight: 600; padding: 2px 6px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .more { font-size: 12px; color: var(--muted); padding: 2px 6px; font-weight: 600; }
 
-  /* ---------- modal ---------- */
-  .backdrop { position: fixed; inset: 0; background: rgba(44,34,27,.35); display: none; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+  /* ---------- okna ---------- */
+  .backdrop { position: fixed; inset: 0; background: rgba(30,22,16,.45); display: none; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
   .backdrop.open { display: flex; }
-  .modal { background: #fff; border-radius: 16px; width: 100%; max-width: 420px; padding: 20px 22px; box-shadow: 0 20px 60px rgba(44,34,27,.3); max-height: 100%; overflow-y: auto; }
-  .modal h2 { font-family: Marcellus, serif; font-weight: 400; font-size: 22px; margin: 0 0 16px; color: var(--espresso); }
-  .lbl { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 14px 0 6px; }
-  .people { display: flex; flex-wrap: wrap; gap: 8px; }
-  .person { border: 2px solid var(--line-strong); background: #fff; border-radius: 999px; padding: 6px 14px 6px 10px; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 7px; }
-  .person .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .person.on { color: #fff; }
-  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  input[type=date], input[type=time], input[type=text] {
-    font: inherit; font-size: 15px; border: 1px solid var(--line-strong); border-radius: 10px; padding: 8px 10px; background: #fff; color: var(--ink);
+  .modal { background: #fff; border-radius: 18px; width: 100%; max-width: 440px; padding: 22px; box-shadow: 0 20px 60px rgba(44,34,27,.35); max-height: 100%; overflow-y: auto; }
+  .modal h2 { font-family: Marcellus, serif; font-weight: 400; font-size: 24px; margin: 0 0 6px; color: var(--espresso); }
+  .modal p { margin: 0 0 10px; line-height: 1.5; }
+  .lbl { font-size: 14px; font-weight: 700; color: var(--espresso); margin: 16px 0 6px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  input[type=date], input[type=time], input[type=text], input[type=password] {
+    font: inherit; font-size: 17px; border: 1px solid var(--line-strong); border-radius: 12px; padding: 10px 12px; background: #fff; color: var(--ink); width: 100%;
+    -webkit-appearance: none; appearance: none; min-height: 46px;
   }
-  input[type=text] { width: 100%; }
   input:focus { outline: 2px solid var(--gold); outline-offset: 0; border-color: var(--gold); }
-  .err { color: var(--now); font-size: 14px; margin-top: 12px; min-height: 0; }
+  .pin { font-size: 28px !important; letter-spacing: .5em; text-align: center; }
+  .err { color: var(--now); font-size: 15px; font-weight: 600; margin-top: 12px; }
   .err:empty { display: none; }
-  .actions { display: flex; gap: 8px; margin-top: 20px; align-items: center; }
+  .actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+  .actions .btn { flex: 1; padding: 12px 16px; font-size: 16px; }
   .btn-danger { color: var(--now); border-color: #e9c3bd; }
   .btn-danger:hover { background: #fbeceb; }
+  .chipline { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 17px; }
+  .chipline .dot { width: 14px; height: 14px; border-radius: 50%; }
+  .names { display: grid; gap: 10px; margin-top: 14px; }
+  .name-btn { border: 0; border-radius: 14px; color: #fff; font-size: 20px; font-weight: 800; padding: 16px; text-align: left; }
+  .name-btn:hover { filter: brightness(1.08); }
+  .link { background: none; border: 0; color: var(--muted); text-decoration: underline; padding: 8px 0; font-size: 15px; margin-top: 8px; }
+  .hint { font-size: 14px; color: var(--muted); margin-top: 8px; }
+  [hidden] { display: none !important; }
 
-  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: var(--espresso); color: var(--cream); padding: 10px 18px; border-radius: 10px; font-size: 14px; opacity: 0; transition: .2s; pointer-events: none; z-index: 60; max-width: calc(100% - 32px); }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: var(--espresso); color: var(--cream); padding: 12px 20px; border-radius: 12px; font-size: 15px; font-weight: 600; opacity: 0; transition: .2s; pointer-events: none; z-index: 60; max-width: calc(100% - 32px); text-align: center; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   .fab { display: none; }
-  @media (max-width: 700px) {
-    .brand { font-size: 18px; width: 100%; }
-    .range { font-size: 16px; }
-    .bar { gap: 6px; padding: 10px 12px; }
-    .bar .add-desktop { display: none; }
-    :root { --gutter: 44px; --hour: 52px; }
+  @media (max-width: 760px) {
+    .hero { padding: 10px 12px; gap: 10px; }
+    .hero img { width: 46px; height: 46px; }
+    .hero h1 { font-size: 21px; }
+    .hero .sub { font-size: 11px; }
+    .me { flex-direction: column; align-items: flex-end; gap: 4px; font-size: 14px; }
+    .me button { padding: 4px 10px; font-size: 13px; }
+    .bar { padding: 10px 12px; gap: 8px; }
+    .bar .add { display: none; }
+    .nav { width: 100%; }
+    .nav .btn { flex: 1; padding: 10px 6px; font-size: 14px; }
+    .range { font-size: 17px; width: 100%; text-align: center; order: -1; }
+    .seg { width: 100%; }
+    .seg button { flex: 1; }
+    .info { padding: 6px 12px; font-size: 13px; }
+    .info .tip { display: none; }
+    :root { --gutter: 46px; --hour: 56px; }
     .dh .dn { font-size: 18px; width: 34px; height: 34px; line-height: 34px; }
-    .mc { min-height: 64px; padding: 2px; }
+    .mg { grid-auto-rows: minmax(64px, 1fr); }
+    .mc { padding: 2px; }
     .chip { font-size: 10px; padding: 1px 3px; }
-    .fab { display: grid; place-items: center; position: fixed; right: 18px; bottom: calc(18px + env(safe-area-inset-bottom)); width: 56px; height: 56px; border-radius: 18px; border: 0; background: var(--espresso); color: var(--cream); font-size: 28px; box-shadow: 0 8px 24px rgba(44,34,27,.35); z-index: 20; }
+    .fab { display: flex; align-items: center; gap: 8px; position: fixed; right: 14px; bottom: calc(16px + env(safe-area-inset-bottom)); border-radius: 999px; border: 0; background: var(--espresso); color: var(--cream); font-size: 17px; font-weight: 800; padding: 15px 22px; box-shadow: 0 8px 24px rgba(44,34,27,.4); z-index: 20; }
   }
 </style>
 </head>
 <body>
 
-<header class="bar">
-  <div class="brand">Masérna · rezervace</div>
-  <button class="btn" id="today">Dnes</button>
-  <button class="icon-btn" id="prev" aria-label="Předchozí">‹</button>
-  <button class="icon-btn" id="next" aria-label="Další">›</button>
+<header class="hero">
+  <img src="elguapo-logo.png" alt="El Guapo Fight Academy">
+  <div>
+    <h1>Masérna</h1>
+    <div class="sub">El Guapo Fight Academy · rezervace</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="me" id="me"></div>
+</header>
+
+<div class="bar">
+  <div class="nav">
+    <button class="btn" id="prev"></button>
+    <button class="btn" id="today">Dnes</button>
+    <button class="btn" id="next"></button>
+  </div>
   <div class="range" id="range"></div>
   <div class="spacer"></div>
   <div class="seg" id="views">
     <button data-v="day">Den</button><button data-v="week">Týden</button><button data-v="month">Měsíc</button>
   </div>
-  <button class="btn btn-primary add-desktop" id="add">+ Rezervovat</button>
-</header>
-<div class="demo" id="demo"></div>
-<div class="legend" id="legend"></div>
+  <button class="btn btn-primary btn-big add" id="add">+ Zarezervovat masérnu</button>
+</div>
+<div class="info">
+  <div class="legend" id="legend"></div>
+  <div class="tip">Klikni na volné místo v kalendáři a zarezervuj si masérnu. Svoje rezervace poznáš podle nápisu <b>MOJE</b>.</div>
+</div>
 <main class="main" id="main"></main>
-<button class="fab" id="fab" aria-label="Rezervovat">+</button>
+<button class="fab" id="fab">+ Zarezervovat</button>
 
+<!-- přihlášení -->
+<div class="backdrop" id="login">
+  <div class="modal">
+    <div id="loginPick">
+      <h2>Kdo jsi?</h2>
+      <p>Klikni na své jméno.</p>
+      <div class="names" id="names"></div>
+      <button class="link" id="justLook">Jen se chci podívat</button>
+    </div>
+    <form id="loginPin" autocomplete="off" hidden>
+      <h2 id="pinTitle"></h2>
+      <p id="pinText"></p>
+      <input type="password" class="pin" id="pin1" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••">
+      <div id="pin2wrap" hidden>
+        <div class="lbl">Zadej ho ještě jednou</div>
+        <input type="password" class="pin" id="pin2" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••">
+      </div>
+      <div class="err" id="loginErr"></div>
+      <div class="actions">
+        <button type="button" class="btn" id="loginBack">Zpět</button>
+        <button type="submit" class="btn btn-primary" id="loginGo">Přihlásit</button>
+      </div>
+      <div class="hint">Zapomněl/a jsi PIN? Napiš Ivaně, smaže ho a vymyslíš si nový.</div>
+    </form>
+  </div>
+</div>
+
+<!-- rezervace -->
 <div class="backdrop" id="backdrop">
   <form class="modal" id="form" autocomplete="off">
-    <h2 id="mtitle">Nová rezervace</h2>
-    <div class="lbl">Kdo si masérnu bere</div>
-    <div class="people" id="mpeople"></div>
-    <div class="lbl">Kdy</div>
-    <div class="row">
-      <input type="date" id="mdate" required>
-      <input type="time" id="mfrom" step="900" required>
-      <span>–</span>
-      <input type="time" id="mto" step="900" required>
+    <h2 id="mtitle"></h2>
+    <div id="mwho" class="chipline"></div>
+    <div id="medit">
+      <div class="lbl">Den</div>
+      <input type="date" id="mdate">
+      <div class="grid2">
+        <div><div class="lbl">Od</div><input type="time" id="mfrom" step="900"></div>
+        <div><div class="lbl">Do</div><input type="time" id="mto" step="900"></div>
+      </div>
+      <div class="lbl">Poznámka (nemusíš vyplňovat)</div>
+      <input type="text" id="mnote" maxlength="80" placeholder="např. jméno klienta">
     </div>
-    <div class="lbl">Poznámka (nepovinné)</div>
-    <input type="text" id="mnote" maxlength="80" placeholder="např. klientka, úklid…">
+    <div id="mview"></div>
     <div class="err" id="merr"></div>
     <div class="actions">
-      <button type="button" class="btn btn-danger" id="mdel">Smazat</button>
-      <div class="spacer"></div>
-      <button type="button" class="btn" id="mcancel">Zrušit</button>
-      <button type="submit" class="btn btn-primary">Uložit</button>
+      <button type="button" class="btn" id="mcancel">Zavřít</button>
+      <button type="submit" class="btn btn-primary" id="msave">Uložit</button>
+    </div>
+    <div class="actions" id="mdelwrap">
+      <button type="button" class="btn btn-danger" id="mdel">Smazat tuhle rezervaci</button>
     </div>
   </form>
 </div>
@@ -228,57 +305,46 @@
 
   const colorOf = (name) => (PEOPLE.find((p) => p.name === name) || {}).color || "#8a7b6d";
 
-  // ---------- úložiště ----------
-  const remote = CFG.supabaseUrl && CFG.supabaseKey;
-  const store = remote ? supabaseStore() : localStore();
+  // ---------- přihlášení (jméno + PIN, pamatuje si ho zařízení) ----------
+  let auth = (() => { try { return JSON.parse(localStorage.getItem("maserna-auth")); } catch { return null; } })();
+  const saveAuth = (a) => { auth = a; try { a ? localStorage.setItem("maserna-auth", JSON.stringify(a)) : localStorage.removeItem("maserna-auth"); } catch {} };
+  const isMine = (b) => !!auth && b.person === auth.person;
 
-  function supabaseStore() {
-    const base = CFG.supabaseUrl.replace(/\/$/, "") + "/rest/v1/bookings";
-    const headers = {
-      apikey: CFG.supabaseKey,
-      // legacy anon klíč (JWT) se posílá i jako Bearer, nový publishable klíč stačí v apikey
-      ...(CFG.supabaseKey.startsWith("eyJ") ? { Authorization: "Bearer " + CFG.supabaseKey } : {}),
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-    };
-    async function call(url, opts = {}) {
-      const r = await fetch(url, { ...opts, headers });
-      if (!r.ok) {
-        const body = await r.json().catch(() => ({}));
-        const e = new Error(body.message || r.statusText);
-        e.conflict = body.code === "23P01"; // porušení exclusion constraintu = překryv
-        throw e;
-      }
-      return r.status === 204 ? null : r.json();
+  // ---------- databáze ----------
+  const base = CFG.supabaseUrl.replace(/\/$/, "") + "/rest/v1";
+  const headers = { apikey: CFG.supabaseKey, "Content-Type": "application/json" };
+  if (CFG.supabaseKey.startsWith("eyJ")) headers.Authorization = "Bearer " + CFG.supabaseKey;
+
+  async function call(path, body) {
+    const r = await fetch(base + path, body ? { method: "POST", headers, body: JSON.stringify(body) } : { headers });
+    if (!r.ok) {
+      const j = await r.json().catch(() => ({}));
+      const e = new Error(j.message || r.statusText);
+      e.code = j.code === "23P01" ? "overlap" : j.message;
+      throw e;
     }
-    return {
-      list: (from, to) => call(`${base}?select=*&starts_at=lt.${encodeURIComponent(to.toISOString())}&ends_at=gt.${encodeURIComponent(from.toISOString())}&order=starts_at`),
-      create: (b) => call(base, { method: "POST", body: JSON.stringify(b) }).then((r) => r[0]),
-      update: (id, b) => call(`${base}?id=eq.${id}`, { method: "PATCH", body: JSON.stringify(b) }).then((r) => r[0]),
-      remove: (id) => call(`${base}?id=eq.${id}`, { method: "DELETE" }),
-    };
+    return r.status === 204 ? null : r.json();
   }
-
-  function localStore() {
-    const KEY = "maserna-demo";
-    const read = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; } };
-    const write = (a) => { try { localStorage.setItem(KEY, JSON.stringify(a)); } catch {} };
-    return {
-      list: async (from, to) => read().filter((b) => new Date(b.starts_at) < to && new Date(b.ends_at) > from),
-      create: async (b) => { const n = { ...b, id: crypto.randomUUID() }; write([...read(), n]); return n; },
-      update: async (id, b) => { const a = read().map((x) => (x.id === id ? { ...x, ...b } : x)); write(a); return a.find((x) => x.id === id); },
-      remove: async (id) => write(read().filter((x) => x.id !== id)),
-    };
-  }
+  const db = {
+    list: (from, to) => call(`/bookings?select=*&starts_at=lt.${encodeURIComponent(to.toISOString())}&ends_at=gt.${encodeURIComponent(from.toISOString())}&order=starts_at`),
+    status: (person) => call("/rpc/person_status", { p_person: person }),
+    setPin: (person, pin) => call("/rpc/set_pin", { p_person: person, p_pin: pin }),
+    checkPin: (person, pin) => call("/rpc/check_pin", { p_person: person, p_pin: pin }),
+    create: (b) => call("/rpc/book_create", { p_person: auth.person, p_pin: auth.pin, p_starts: b.starts_at, p_ends: b.ends_at, p_note: b.note }),
+    update: (id, b) => call("/rpc/book_update", { p_id: id, p_person: auth.person, p_pin: auth.pin, p_starts: b.starts_at, p_ends: b.ends_at, p_note: b.note }),
+    remove: (id) => call("/rpc/book_delete", { p_id: id, p_person: auth.person, p_pin: auth.pin }),
+  };
 
   // ---------- stav ----------
-  let view = localGet("maserna-view") || (innerWidth < 700 ? "day" : "week");
-  if (innerWidth < 700 && view === "week") view = "day";
+  const narrow = () => innerWidth < 760;
+  let view = localGet("maserna-view") || (narrow() ? "day" : "week");
+  if (narrow() && view === "week") view = "day";
   let cursor = sod(new Date());
   let bookings = [];
   let busy = false;         // probíhá tažení – nepřekreslovat z pollingu
   let editing = null;       // upravovaná rezervace (null = nová)
   let lastScroll = null;
+  let afterLogin = null;    // co udělat po přihlášení
 
   function localGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
   function localSet(k, v) { try { localStorage.setItem(k, v); } catch {} }
@@ -294,41 +360,48 @@
   async function load() {
     const [from, to] = visibleRange();
     try {
-      bookings = await store.list(from, to);
+      bookings = await db.list(from, to);
     } catch (e) {
-      toast("Nepodařilo se načíst rezervace: " + e.message);
+      toast("Kalendář se nepodařilo načíst. Zkontroluj internet.");
     }
     if (!busy) render();
   }
 
-  function conflictWith(start, end, ignoreId) {
-    return bookings.find((b) => b.id !== ignoreId && new Date(b.starts_at) < end && new Date(b.ends_at) > start);
-  }
+  const conflictWith = (start, end, ignoreId) =>
+    bookings.find((b) => b.id !== ignoreId && new Date(b.starts_at) < end && new Date(b.ends_at) > start);
+  const OVERLAP = "V tu dobu už je masérna rezervovaná.";
 
-  function conflictMsg() {
-    return "V tu dobu už je masérna rezervovaná.";
+  function explain(e) {
+    if (e.code === "overlap") return OVERLAP;
+    if (e.code === "not_owner") return "Tuhle rezervaci může měnit jen ten, kdo ji vytvořil.";
+    if (e.code === "bad_pin") { saveAuth(null); renderMe(); return "PIN nesedí. Přihlas se prosím znovu."; }
+    return "Něco se pokazilo, zkus to znovu. (" + e.message + ")";
   }
 
   async function save(id, data) {
     try {
       if (id) {
-        const u = await store.update(id, data);
+        const u = await db.update(id, data);
         bookings = bookings.map((b) => (b.id === id ? u : b));
       } else {
-        bookings.push(await store.create(data));
+        bookings.push(await db.create(data));
       }
       render();
       return true;
     } catch (e) {
+      const msg = explain(e);
       await load();
-      toast(e.conflict ? conflictMsg() : "Uložení selhalo: " + e.message);
-      return false;
+      toast(msg);
+      return msg;
     }
   }
 
   // ---------- vykreslení ----------
   function render() {
     for (const b of document.querySelectorAll("#views button")) b.classList.toggle("on", b.dataset.v === view);
+    const unit = { day: "Den", week: "Týden", month: "Měsíc" }[view];
+    $("prev").textContent = `◀ ${unit} zpět`;
+    $("next").textContent = `${unit} dopředu ▶`;
     $("range").textContent = rangeLabel();
     const sc = document.querySelector(".tg-scroll");
     if (sc) lastScroll = sc.scrollTop;
@@ -338,11 +411,22 @@
   }
 
   function rangeLabel() {
-    if (view === "day") return cap(fmt(cursor, { weekday: "long", day: "numeric", month: "long", year: "numeric" }));
+    if (view === "day") return cap(fmt(cursor, { weekday: "long", day: "numeric", month: "long" }));
     if (view === "month") return cap(fmt(cursor, { month: "long", year: "numeric" }));
     const s = sow(cursor), e = addDays(s, 6);
     if (s.getMonth() === e.getMonth()) return `${s.getDate()}.–${fmt(e, { day: "numeric", month: "long", year: "numeric" })}`;
     return `${fmt(s, { day: "numeric", month: "long" })} – ${fmt(e, { day: "numeric", month: "long", year: "numeric" })}`;
+  }
+
+  function renderMe() {
+    const me = $("me");
+    if (auth) {
+      me.innerHTML = `<div>Přihlášen/a jako<br><span class="who"><span class="dot" style="background:${colorOf(auth.person)}"></span>${esc(auth.person)}</span></div><button id="logout">Odhlásit</button>`;
+      $("logout").onclick = () => { saveAuth(null); renderMe(); render(); };
+    } else {
+      me.innerHTML = `<button id="loginBtn">Přihlásit se</button>`;
+      $("loginBtn").onclick = () => openLogin();
+    }
   }
 
   function renderGrid(main) {
@@ -384,12 +468,11 @@
     scroll.append(body);
     main.append(head, scroll);
 
-    // šířka scrollbaru, ať hlavička sedí na sloupce
     head.style.setProperty("--sbw", scroll.offsetWidth - scroll.clientWidth + "px");
     scroll.scrollTop = lastScroll ?? hourPx() * (CFG.dayStartHour ?? 7);
   }
 
-  const hourPx = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hour")) || 48;
+  const hourPx = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hour")) || 52;
 
   // Rozdělí překrývající se rezervace (pokud by nějaké byly) do sloupečků vedle sebe.
   function layoutDay(day) {
@@ -422,17 +505,17 @@
 
   function eventEl(b, lane = 0, lanes = 1) {
     const s = new Date(b.starts_at), e = new Date(b.ends_at);
-    const ev = el("div", "ev");
+    const ev = el("div", "ev" + (isMine(b) ? " mine" : ""));
     ev.dataset.id = b.id;
     ev.style.background = colorOf(b.person);
     if (lanes > 1) {
-      ev.style.left = `calc(${(lane / lanes) * 100}% + 2px)`;
+      ev.style.left = `calc(${(lane / lanes) * 100}% + 3px)`;
       ev.style.right = "auto";
-      ev.style.width = `calc(${100 / lanes}% - 6px)`;
+      ev.style.width = `calc(${100 / lanes}% - 8px)`;
     }
     placeEvent(ev, minsOf(s), sameDay(s, e) ? minsOf(e) : DAY_MIN);
-    ev.innerHTML = `<div class="who"></div><div class="when"></div><div class="note"></div><div class="rs"></div>`;
-    fillEvent(ev, b.person, s, e, b.note);
+    ev.innerHTML = `<div class="who"></div><div class="when"></div><div class="note"></div>` + (isMine(b) ? `<div class="rs"></div>` : "");
+    fillEvent(ev, b, s, e);
     attachDrag(ev, b);
     return ev;
   }
@@ -443,10 +526,10 @@
     ev.classList.toggle("short", eMin - sMin <= 30);
   }
 
-  function fillEvent(ev, person, s, e, note) {
-    ev.querySelector(".who").textContent = person;
+  function fillEvent(ev, b, s, e) {
+    ev.querySelector(".who").innerHTML = esc(b.person) + (isMine(b) ? `<span class="tag">MOJE</span>` : "");
     ev.querySelector(".when").textContent = `${hm(s)}–${hm(e)}`;
-    ev.querySelector(".note").textContent = note || "";
+    ev.querySelector(".note").textContent = b.note || "";
   }
 
   function renderMonth(main) {
@@ -455,7 +538,7 @@
     const mh = el("div", "mh");
     for (let i = 0; i < 7; i++) mh.append(Object.assign(el("div"), { textContent: fmt(addDays(start, i), { weekday: "short" }) }));
     const mg = el("div", "mg");
-    const maxChips = innerWidth < 700 ? 2 : 3;
+    const maxChips = narrow() ? 2 : 3;
     for (let i = 0; i < 42; i++) {
       const d = addDays(start, i);
       const c = el("div", "mc" + (d.getMonth() !== cursor.getMonth() ? " other" : "") + (sameDay(d, today) ? " today" : ""));
@@ -478,7 +561,6 @@
 
   function renderLegend() {
     $("legend").innerHTML = PEOPLE.map((p) => `<span><span class="dot" style="background:${p.color}"></span>${esc(p.name)}</span>`).join("");
-    $("demo").textContent = remote ? "" : "Demo režim – rezervace se zatím ukládají jen v tomhle prohlížeči. Sdílení se zapne po napojení databáze.";
   }
 
   // ---------- interakce v mřížce ----------
@@ -493,7 +575,7 @@
   const snap = (m, f = Math.round) => f(m / SNAP) * SNAP;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-  // tažením po prázdném místě se vytvoří nová rezervace, ťuknutím 1h rezervace
+  // tažením myší po prázdném místě se vytvoří rezervace, kliknutím/ťuknutím hodinová
   function attachCreate(col) {
     col.addEventListener("pointerdown", (e) => {
       if (e.target !== col || e.button > 0) return;
@@ -503,7 +585,10 @@
       let ghost = null, range = null, cancelled = false;
 
       const move = (ev) => {
-        if (touch) return; // na mobilu tah = scroll
+        if (touch) {
+          if (Math.hypot(ev.clientX - x0, ev.clientY - y0) > 10) cancelled = true; // na mobilu tah = posouvání
+          return;
+        }
         if (!ghost && Math.hypot(ev.clientX - x0, ev.clientY - y0) < 5) return;
         busy = true;
         if (!ghost) { ghost = el("div", "ghost"); col.append(ghost); }
@@ -515,23 +600,22 @@
         const d = parseYmd(col.dataset.date);
         ghost.textContent = `${hm(atMin(d, s))}–${hm(atMin(d, en))}`;
       };
-      const cancel = () => { cancelled = true; cleanup(); };
+      const cancel = () => { cancelled = true; done(); };
       const up = () => {
-        cleanup();
+        done();
         if (cancelled) return;
         const d = parseYmd(col.dataset.date);
         let s, en;
         if (range) [s, en] = range;
         else { s = clamp(Math.floor(m0 / 30) * 30, 0, DAY_MIN - 60); en = s + 60; }
-        openModal(null, atMin(d, s), atMin(d, en));
-        ghost?.remove();
-        busy = false;
+        newBooking(atMin(d, s), atMin(d, en));
       };
-      const cleanup = () => {
+      const done = () => {
         removeEventListener("pointermove", move);
         removeEventListener("pointerup", up);
         removeEventListener("pointercancel", cancel);
-        if (cancelled) { ghost?.remove(); busy = false; }
+        ghost?.remove();
+        busy = false;
       };
       addEventListener("pointermove", move);
       addEventListener("pointerup", up);
@@ -539,11 +623,21 @@
     });
   }
 
-  // přesun rezervace (i mezi dny) a změna délky za spodní okraj
+  // vlastní rezervace jde myší přesunout (i na jiný den) a za spodní okraj prodloužit;
+  // na mobilu se jen ťukne a upraví v okně, ať se nic nepřesune omylem
   function attachDrag(ev, b) {
     ev.addEventListener("pointerdown", (e) => {
       if (e.button > 0) return;
       e.stopPropagation();
+      if (!isMine(b) || e.pointerType === "touch") {
+        const x0 = e.clientX, y0 = e.clientY;
+        const up = (u) => {
+          removeEventListener("pointerup", up);
+          if (Math.hypot(u.clientX - x0, u.clientY - y0) < 10) openModal(b);
+        };
+        addEventListener("pointerup", up);
+        return;
+      }
       e.preventDefault();
       const resize = e.target.classList.contains("rs");
       const os = new Date(b.starts_at), oe = new Date(b.ends_at);
@@ -568,7 +662,7 @@
           ns = atMin(d, st); ne = new Date(ns.getTime() + dur * 60000);
           placeEvent(ev, st, st + dur);
         }
-        fillEvent(ev, b.person, ns, ne, b.note);
+        fillEvent(ev, b, ns, ne);
       };
       const up = async () => {
         removeEventListener("pointermove", move);
@@ -578,9 +672,8 @@
         busy = false;
         if (!moved) return openModal(b);
         if (+ns === +os && +ne === +oe) return render();
-        const c = conflictWith(ns, ne, b.id);
-        if (c) { toast(conflictMsg(c)); return render(); }
-        await save(b.id, { starts_at: ns.toISOString(), ends_at: ne.toISOString() });
+        if (conflictWith(ns, ne, b.id)) { toast(OVERLAP); return render(); }
+        await save(b.id, { starts_at: ns.toISOString(), ends_at: ne.toISOString(), note: b.note });
       };
       addEventListener("pointermove", move);
       addEventListener("pointerup", up);
@@ -588,83 +681,145 @@
     });
   }
 
-  // ---------- modal ----------
-  let chosen = null;
+  // ---------- přihlašovací okno ----------
+  let loginPerson = null, loginMode = null;
+
+  function openLogin(then) {
+    afterLogin = then || null;
+    $("loginPick").hidden = false;
+    $("loginPin").hidden = true;
+    const names = $("names");
+    names.innerHTML = "";
+    for (const p of PEOPLE) {
+      const btn = el("button", "name-btn");
+      btn.type = "button";
+      btn.style.background = p.color;
+      btn.textContent = p.name;
+      btn.onclick = () => pickPerson(p.name);
+      names.append(btn);
+    }
+    $("login").classList.add("open");
+  }
+  const closeLogin = () => { $("login").classList.remove("open"); afterLogin = null; };
+
+  async function pickPerson(name) {
+    loginPerson = name;
+    try { loginMode = await db.status(name); } catch { return toast("Nepodařilo se spojit, zkus to znovu."); }
+    const first = loginMode === "new";
+    $("pinTitle").textContent = name;
+    $("pinText").textContent = first
+      ? "Jsi tu poprvé. Vymysli si PIN ze 4 číslic a zapamatuj si ho. Na tomhle telefonu/počítači ho pak už zadávat nebudeš."
+      : "Zadej svůj PIN (4 číslice).";
+    $("loginGo").textContent = first ? "Uložit PIN a přihlásit" : "Přihlásit";
+    $("pin2wrap").hidden = !first;
+    $("pin1").value = $("pin2").value = "";
+    $("loginErr").textContent = "";
+    $("loginPick").hidden = true;
+    $("loginPin").hidden = false;
+    $("pin1").focus();
+  }
+
+  $("loginBack").onclick = () => { $("loginPick").hidden = false; $("loginPin").hidden = true; };
+  $("justLook").onclick = closeLogin;
+  $("loginPin").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const pin = $("pin1").value.trim(), err = $("loginErr");
+    if (!/^\d{4}$/.test(pin)) return (err.textContent = "PIN musí mít přesně 4 číslice.");
+    try {
+      if (loginMode === "new") {
+        if (pin !== $("pin2").value.trim()) return (err.textContent = "PINy se neshodují, zkus to znovu.");
+        await db.setPin(loginPerson, pin);
+      } else {
+        await db.checkPin(loginPerson, pin);
+      }
+    } catch (x) {
+      if (x.code === "pin_exists") return (err.textContent = "Tohle jméno už PIN má. Klikni Zpět a zkus to znovu.");
+      return (err.textContent = x.code === "bad_pin" ? "Špatný PIN, zkus to znovu." : "Nepodařilo se spojit, zkus to znovu.");
+    }
+    saveAuth({ person: loginPerson, pin });
+    const then = afterLogin;
+    closeLogin();
+    renderMe();
+    render();
+    toast(`Ahoj, jsi přihlášen/a jako ${loginPerson}.`);
+    then?.();
+  });
+
+  // ---------- okno rezervace ----------
+  function newBooking(start, end) {
+    if (!auth) return openLogin(() => newBooking(start, end));
+    openModal(null, start, end);
+  }
 
   function openModal(b, start, end) {
     editing = b;
+    const mine = !b || isMine(b);
     if (b) { start = new Date(b.starts_at); end = new Date(b.ends_at); }
     if (!start) {
       const n = new Date();
-      const base = view === "day" || sameDay(cursor, sod(n)) ? (sameDay(cursor, sod(n)) ? n : cursor) : cursor;
+      const base = sameDay(cursor, sod(n)) || cursor < n ? n : cursor;
       const m = sameDay(base, n) ? Math.ceil((minsOf(n) + 1) / 30) * 30 : 9 * 60;
       start = atMin(base, Math.min(m, DAY_MIN - 60));
       end = new Date(start.getTime() + 3600000);
     }
-    chosen = b ? b.person : localGet("maserna-me") || null;
-    $("mtitle").textContent = b ? "Upravit rezervaci" : "Nová rezervace";
+    const person = b ? b.person : auth.person;
+    $("mtitle").textContent = !b ? "Zarezervovat masérnu" : mine ? "Moje rezervace" : "Masérna je obsazená";
+    $("mwho").innerHTML = `<span class="dot" style="background:${colorOf(person)}"></span>${esc(person)}`;
+    $("medit").hidden = !mine;
+    $("msave").hidden = !mine;
+    $("mdelwrap").hidden = !(b && mine);
+    $("mcancel").textContent = mine ? "Zavřít" : "OK";
+    $("mview").innerHTML = mine ? "" :
+      `<p style="margin-top:12px;font-size:17px"><b>${cap(fmt(start, { weekday: "long", day: "numeric", month: "long" }))}</b><br>${hm(start)} – ${hm(end)}${b.note ? "<br>" + esc(b.note) : ""}</p>
+       <p class="hint">Tuhle rezervaci může změnit nebo smazat jen ${esc(b.person)}.</p>`;
     $("mdate").value = ymd(start);
     $("mfrom").value = hmInput(start);
     $("mto").value = hmInput(end);
     $("mnote").value = b?.note || "";
-    $("mdel").style.display = b ? "" : "none";
     $("merr").textContent = "";
-    renderPeople();
     $("backdrop").classList.add("open");
   }
 
   function closeModal() { $("backdrop").classList.remove("open"); editing = null; }
 
-  function renderPeople() {
-    const wrap = $("mpeople");
-    wrap.innerHTML = "";
-    for (const p of PEOPLE) {
-      const btn = el("button", "person" + (chosen === p.name ? " on" : ""));
-      btn.type = "button";
-      btn.innerHTML = `<span class="dot" style="background:${p.color}"></span>${esc(p.name)}`;
-      if (chosen === p.name) { btn.style.background = p.color; btn.style.borderColor = p.color; btn.querySelector(".dot").style.background = "#fff"; }
-      btn.onclick = () => { chosen = p.name; renderPeople(); };
-      wrap.append(btn);
-    }
-  }
-
   $("form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const err = $("merr");
-    if (!chosen) return (err.textContent = "Vyber, kdo si masérnu bere.");
+    if (!auth) { closeModal(); return openLogin(); }
+    if (!$("mdate").value || !$("mfrom").value || !$("mto").value) return (err.textContent = "Vyplň den a čas od–do.");
     const d = parseYmd($("mdate").value);
     const [fh, fm] = $("mfrom").value.split(":").map(Number);
     const [th, tm] = $("mto").value.split(":").map(Number);
     const s = atMin(d, fh * 60 + fm);
     const en = th === 0 && tm === 0 ? addDays(d, 1) : atMin(d, th * 60 + tm);
-    if (en <= s) return (err.textContent = "Konec musí být později než začátek.");
+    if (en <= s) return (err.textContent = "Čas „Do“ musí být později než „Od“.");
     // ověř kolize i mimo zrovna zobrazený rozsah
     try {
-      const around = await store.list(s, en);
-      const c = around.find((x) => x.id !== editing?.id);
-      if (c) return (err.textContent = conflictMsg(c));
+      const around = await db.list(s, en);
+      if (around.some((x) => x.id !== editing?.id)) return (err.textContent = OVERLAP);
     } catch {}
-    localSet("maserna-me", chosen);
-    const data = { person: chosen, note: $("mnote").value.trim() || null, starts_at: s.toISOString(), ends_at: en.toISOString() };
+    const data = { note: $("mnote").value.trim() || null, starts_at: s.toISOString(), ends_at: en.toISOString() };
     const id = editing?.id;
-    if (await save(id, data)) {
+    const res = await save(id, data);
+    if (res === true) {
       closeModal();
-      toast(id ? "Rezervace upravena." : "Masérna je zarezervovaná.");
-    }
+      toast(id ? "Rezervace je upravená." : "Hotovo, masérna je zarezervovaná.");
+    } else err.textContent = res;
   });
 
   $("mdel").onclick = async () => {
-    if (!editing || !confirm(`Smazat rezervaci – ${editing.person}?`)) return;
+    if (!editing || !confirm("Opravdu smazat tuhle rezervaci?")) return;
     try {
-      await store.remove(editing.id);
+      await db.remove(editing.id);
       bookings = bookings.filter((b) => b.id !== editing.id);
       closeModal();
       render();
-      toast("Rezervace smazána.");
-    } catch (e) { $("merr").textContent = "Smazání selhalo: " + e.message; }
+      toast("Rezervace je smazaná.");
+    } catch (e) { $("merr").textContent = explain(e); }
   };
   $("mcancel").onclick = closeModal;
   $("backdrop").addEventListener("pointerdown", (e) => { if (e.target === $("backdrop")) closeModal(); });
+  $("login").addEventListener("pointerdown", (e) => { if (e.target === $("login")) closeLogin(); });
 
   // ---------- navigace ----------
   function setView(v) { view = v; localSet("maserna-view", v); lastScroll = null; load(); }
@@ -678,17 +833,13 @@
   $("next").onclick = () => shift(1);
   $("today").onclick = () => { cursor = sod(new Date()); lastScroll = null; load(); };
   for (const b of document.querySelectorAll("#views button")) b.onclick = () => setView(b.dataset.v);
-  $("add").onclick = $("fab").onclick = () => openModal(null);
+  $("add").onclick = $("fab").onclick = () => newBooking();
 
   addEventListener("keydown", (e) => {
-    if (e.key === "Escape") return closeModal();
-    if ($("backdrop").classList.contains("open") || e.target.matches("input")) return;
+    if (e.key === "Escape") { closeModal(); closeLogin(); return; }
+    if (document.querySelector(".backdrop.open") || e.target.matches("input")) return;
     if (e.key === "ArrowLeft") shift(-1);
     if (e.key === "ArrowRight") shift(1);
-    if (e.key === "t") $("today").click();
-    if (e.key === "d") setView("day");
-    if (e.key === "w") setView("week");
-    if (e.key === "m") setView("month");
   });
 
   // ---------- pomocné ----------
@@ -700,15 +851,16 @@
     t.textContent = msg;
     t.classList.add("show");
     clearTimeout(toastT);
-    toastT = setTimeout(() => t.classList.remove("show"), 3500);
+    toastT = setTimeout(() => t.classList.remove("show"), 4000);
   }
 
   // ---------- start + průběžná synchronizace ----------
   renderLegend();
+  renderMe();
   load();
-  setInterval(() => { if (!busy && !document.hidden) load(); }, 15000);
+  if (!auth && !localGet("maserna-seen")) { localSet("maserna-seen", "1"); openLogin(); }
+  setInterval(() => { if (!busy && !document.hidden && !document.querySelector(".backdrop.open")) load(); }, 15000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
-  // posun čáry „teď" každou minutu
   setInterval(() => {
     const n = document.querySelector(".now");
     if (n) n.style.top = `calc(var(--hour) * ${minsOf(new Date()) / 60})`;

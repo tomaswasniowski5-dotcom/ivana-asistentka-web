@@ -1,6 +1,6 @@
 // Nastavení sdíleného kalendáře masérny.
-// Dokud jsou supabaseUrl/supabaseKey prázdné, běží kalendář v demo režimu
-// (rezervace se ukládají jen v tomhle prohlížeči).
+// Data jsou v Supabase (projekt „maserna“). Nové jméno je potřeba přidat i do databáze:
+// insert into public.people (name) values ('Nové jméno');
 window.MASERNA_CONFIG = {
   supabaseUrl: "https://gqevdowipgxsnrygnhbo.supabase.co",
   supabaseKey: "sb_publishable_yyUu60XklFSBZ-zevWHqag_AkTNWb57", // veřejný klíč: "publishable" (sb_publishable_…) nebo legacy "anon" (eyJ…), nikdy secret/service_role!
