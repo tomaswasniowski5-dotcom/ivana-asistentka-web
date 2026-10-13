@@ -147,7 +147,16 @@
     font: inherit; font-size: 17px; border: 1px solid var(--line-strong); border-radius: 12px; padding: 10px 12px; background: #fff; color: var(--ink); width: 100%;
     -webkit-appearance: none; appearance: none; min-height: 46px;
   }
-  input:focus { outline: 2px solid var(--gold); outline-offset: 0; border-color: var(--gold); }
+  select.time {
+    font: inherit; font-size: 18px; font-weight: 700; border: 1px solid var(--line-strong); border-radius: 12px; padding: 10px 36px 10px 14px; color: var(--ink); width: 100%; min-height: 48px;
+    -webkit-appearance: none; appearance: none; cursor: pointer;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232c221b' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat right 14px center;
+  }
+  .durs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .durs button { border: 1px solid var(--line-strong); background: #fff; border-radius: 12px; padding: 11px 4px; font-size: 17px; font-weight: 800; color: var(--espresso); }
+  .durs button:hover { background: var(--linen); }
+  .durs button.on { background: var(--espresso); border-color: var(--espresso); color: var(--cream); }
+  input:focus, select.time:focus { outline: 2px solid var(--gold); outline-offset: 0; border-color: var(--gold); }
   .pin { font-size: 28px !important; letter-spacing: .5em; text-align: center; }
   .err { color: var(--now); font-size: 15px; font-weight: 600; margin-top: 12px; }
   .err:empty { display: none; }
@@ -269,10 +278,16 @@
     <div id="medit">
       <div class="lbl">Den</div>
       <input type="date" id="mdate">
-      <div class="grid2">
-        <div><div class="lbl">Od</div><input type="time" id="mfrom" step="900"></div>
-        <div><div class="lbl">Do</div><input type="time" id="mto" step="900"></div>
+      <div class="lbl">Od</div>
+      <select class="time" id="mfrom"></select>
+      <div class="lbl">Délka masáže</div>
+      <div class="durs" id="durs">
+        <button type="button" data-min="30">30 min</button>
+        <button type="button" data-min="60">60 min</button>
+        <button type="button" data-min="90">90 min</button>
       </div>
+      <div class="lbl">Do <span style="font-weight:500;color:var(--muted)">(dopočítá se samo, jde změnit)</span></div>
+      <select class="time" id="mto"></select>
       <div class="lbl">Poznámka (nemusíš vyplňovat)</div>
       <input type="text" id="mnote" maxlength="80" placeholder="např. jméno klienta">
     </div>
@@ -309,7 +324,6 @@
   const pad = (n) => String(n).padStart(2, "0");
   const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   const hm = (d) => `${d.getHours()}:${pad(d.getMinutes())}`;
-  const hmInput = (d) => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
   const parseYmd = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
   const fmt = (d, o) => new Intl.DateTimeFormat("cs-CZ", o).format(d);
   const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -801,12 +815,40 @@
       `<p style="margin-top:12px;font-size:17px"><b>${cap(fmt(start, { weekday: "long", day: "numeric", month: "long" }))}</b><br>${hm(start)} – ${hm(end)}${b.note ? "<br>" + esc(b.note) : ""}</p>
        <p class="hint">Tuhle rezervaci může změnit nebo smazat jen ${esc(b.person)}.</p>`;
     $("mdate").value = ymd(start);
-    $("mfrom").value = hmInput(start);
-    $("mto").value = hmInput(end);
+    setTime("mfrom", minsOf(start));
+    setTime("mto", sameDay(start, end) ? minsOf(end) : DAY_MIN);
+    syncDur();
     $("mnote").value = b?.note || "";
     $("merr").textContent = "";
     $("backdrop").classList.add("open");
   }
+
+  // časy po 15 minutách: „Od“ 6:00–23:45, „Do“ 6:15–24:00
+  const label = (m) => `${Math.floor(m / 60)}:${pad(m % 60)}`;
+  for (let m = G0; m < DAY_MIN; m += SNAP) $("mfrom").add(new Option(label(m), m));
+  for (let m = G0 + SNAP; m <= DAY_MIN; m += SNAP) $("mto").add(new Option(label(m), m));
+  const timeOf = (id) => +$(id).value;
+  function setTime(id, m) {
+    if (![...$(id).options].some((o) => +o.value === m)) $(id).add(new Option(label(m), m)); // starší rezervace mimo mřížku
+    $(id).value = m;
+  }
+  let dur = 60; // zvolená délka – drží se i při změně „Od“
+  function syncDur() {
+    dur = timeOf("mto") - timeOf("mfrom");
+    for (const b of $("durs").children) b.classList.toggle("on", +b.dataset.min === dur);
+  }
+  for (const b of $("durs").children) b.onclick = () => {
+    const end = timeOf("mfrom") + +b.dataset.min;
+    if (end > DAY_MIN) return ($("merr").textContent = "Masáž by končila po půlnoci, zvol dřívější začátek.");
+    $("merr").textContent = "";
+    setTime("mto", end);
+    syncDur();
+  };
+  $("mfrom").onchange = () => {
+    setTime("mto", Math.min(timeOf("mfrom") + (dur > 0 ? dur : 60), DAY_MIN));
+    syncDur();
+  };
+  $("mto").onchange = syncDur;
 
   function closeModal() { $("backdrop").classList.remove("open"); editing = null; }
 
@@ -814,12 +856,10 @@
     e.preventDefault();
     const err = $("merr");
     if (!auth) { closeModal(); return openLogin(); }
-    if (!$("mdate").value || !$("mfrom").value || !$("mto").value) return (err.textContent = "Vyplň den a čas od–do.");
+    if (!$("mdate").value) return (err.textContent = "Vyber den.");
     const d = parseYmd($("mdate").value);
-    const [fh, fm] = $("mfrom").value.split(":").map(Number);
-    const [th, tm] = $("mto").value.split(":").map(Number);
-    const s = atMin(d, fh * 60 + fm);
-    const en = th === 0 && tm === 0 ? addDays(d, 1) : atMin(d, th * 60 + tm);
+    const s = atMin(d, timeOf("mfrom"));
+    const en = atMin(d, timeOf("mto")); // 24:00 = půlnoc
     if (en <= s) return (err.textContent = "Čas „Do“ musí být později než „Od“.");
     if (minsOf(s) < G0) return (err.textContent = `Masérna se dá rezervovat od ${G0 / 60}:00.`);
     // ověř kolize i mimo zrovna zobrazený rozsah
