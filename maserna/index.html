@@ -255,17 +255,25 @@
     <form id="loginPin" autocomplete="off" hidden>
       <h2 id="pinTitle"></h2>
       <p id="pinText"></p>
-      <input type="password" class="pin" id="pin1" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••">
+      <div id="birthWrap" hidden>
+        <div class="lbl">Datum narození</div>
+        <input type="text" id="birth" inputmode="decimal" placeholder="např. 15. 3. 1985" autocomplete="off">
+        <div class="hint" id="birthHint"></div>
+      </div>
+      <div id="pin1wrap">
+        <div class="lbl" id="pin1lbl"></div>
+        <input type="password" class="pin" id="pin1" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••">
+      </div>
       <div id="pin2wrap" hidden>
-        <div class="lbl">Zadej ho ještě jednou</div>
+        <div class="lbl">Zadej PIN ještě jednou</div>
         <input type="password" class="pin" id="pin2" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••">
       </div>
       <div class="err" id="loginErr"></div>
       <div class="actions">
         <button type="button" class="btn" id="loginBack">Zpět</button>
-        <button type="submit" class="btn btn-primary" id="loginGo">Přihlásit</button>
+        <button type="submit" class="btn btn-primary" id="loginGo"></button>
       </div>
-      <div class="hint">Zapomněl/a jsi PIN? Napiš Ivaně, smaže ho a vymyslíš si nový.</div>
+      <button type="button" class="link" id="forgot">Zapomněl/a jsem PIN</button>
     </form>
   </div>
 </div>
@@ -357,7 +365,9 @@
     list: (from, to) => call(`/bookings?select=id,person,starts_at,ends_at&starts_at=lt.${encodeURIComponent(to.toISOString())}&ends_at=gt.${encodeURIComponent(from.toISOString())}&order=starts_at`),
     notes: (from, to) => call("/rpc/my_notes", { p_person: auth.person, p_pin: auth.pin, p_from: from.toISOString(), p_to: to.toISOString() }),
     status: (person) => call("/rpc/person_status", { p_person: person }),
-    setPin: (person, pin) => call("/rpc/set_pin", { p_person: person, p_pin: pin }),
+    setPin: (person, pin, birth) => call("/rpc/set_pin", { p_person: person, p_pin: pin, p_birth: birth }),
+    setBirth: (birth) => call("/rpc/set_birth", { p_person: auth.person, p_pin: auth.pin, p_birth: birth }),
+    resetPin: (person, birth, pin) => call("/rpc/reset_pin", { p_person: person, p_birth: birth, p_pin: pin }),
     checkPin: (person, pin) => call("/rpc/check_pin", { p_person: person, p_pin: pin }),
     create: (b) => call("/rpc/book_create", { p_person: auth.person, p_pin: auth.pin, p_starts: b.starts_at, p_ends: b.ends_at, p_note: b.note }),
     update: (id, b) => call("/rpc/book_update", { p_id: id, p_person: auth.person, p_pin: auth.pin, p_starts: b.starts_at, p_ends: b.ends_at, p_note: b.note }),
@@ -746,46 +756,99 @@
 
   async function pickPerson(name) {
     loginPerson = name;
-    try { loginMode = await db.status(name); } catch { return toast("Nepodařilo se spojit, zkus to znovu."); }
-    const first = loginMode === "new";
-    $("pinTitle").textContent = name;
-    $("pinText").textContent = first
-      ? "Jsi tu poprvé. Vymysli si PIN ze 4 číslic a zapamatuj si ho. Na tomhle telefonu/počítači ho pak už zadávat nebudeš."
-      : "Zadej svůj PIN (4 číslice).";
-    $("loginGo").textContent = first ? "Uložit PIN a přihlásit" : "Přihlásit";
-    $("pin2wrap").hidden = !first;
-    $("pin1").value = $("pin2").value = "";
+    let status;
+    try { status = await db.status(name); } catch { return toast("Nepodařilo se spojit, zkus to znovu."); }
+    showLoginStep(status === "new" ? "new" : "login");
+  }
+
+  // kroky přihlašovacího okna: new = první PIN, login = zadat PIN, reset = zapomenutý PIN, birth = doplnit datum narození
+  function showLoginStep(mode) {
+    loginMode = mode;
+    const t = {
+      new: ["Jsi tu poprvé. Vymysli si PIN ze 4 číslic. Na tomhle telefonu/počítači ho pak už zadávat nebudeš.", "Vymysli si PIN (4 číslice)", "Uložit a přihlásit"],
+      login: ["", "Zadej svůj PIN (4 číslice)", "Přihlásit"],
+      reset: ["Napiš své datum narození a vymysli si nový PIN.", "Nový PIN (4 číslice)", "Uložit nový PIN"],
+      birth: ["Doplň prosím své datum narození. Kdybys někdy zapomněl/a PIN, podle něj si nastavíš nový.", "", "Uložit"],
+    }[mode];
+    $("pinTitle").textContent = mode === "reset" ? `${loginPerson} – nový PIN` : loginPerson;
+    $("pinText").textContent = t[0];
+    $("pinText").hidden = !t[0];
+    $("pin1lbl").textContent = t[1];
+    $("loginGo").textContent = t[2];
+    $("birthWrap").hidden = mode === "login";
+    $("birthHint").textContent = mode === "new" ? "Pro případ, že zapomeneš PIN – podle data si pak nastavíš nový." : "";
+    $("pin1wrap").hidden = mode === "birth";
+    $("pin2wrap").hidden = !(mode === "new" || mode === "reset");
+    $("forgot").hidden = mode !== "login";
+    $("loginBack").textContent = mode === "birth" ? "Teď ne" : "Zpět";
+    $("pin1").value = $("pin2").value = $("birth").value = "";
     $("loginErr").textContent = "";
     $("loginPick").hidden = true;
     $("loginPin").hidden = false;
-    $("pin1").focus();
+    $("login").classList.add("open");
+    (mode === "login" ? $("pin1") : $("birth")).focus();
   }
 
-  $("loginBack").onclick = () => { $("loginPick").hidden = false; $("loginPin").hidden = true; };
+  // „15. 3. 1985“, „15.3.1985“ i „15031985“ → "1985-03-15"
+  function parseBirth(str) {
+    const t = str.trim();
+    const m = t.match(/^(\d{1,2})\D+(\d{1,2})\D+(\d{4})$/) || t.match(/^(\d{2})(\d{2})(\d{4})$/);
+    if (!m) return null;
+    const [d, mo, y] = [+m[1], +m[2], +m[3]];
+    const dt = new Date(y, mo - 1, d);
+    if (dt.getDate() !== d || dt.getMonth() !== mo - 1 || y < 1920 || dt > new Date()) return null;
+    return `${y}-${pad(mo)}-${pad(d)}`;
+  }
+
+  $("loginBack").onclick = () => {
+    if (loginMode === "birth") return closeLogin();
+    if (loginMode === "reset") return showLoginStep("login");
+    $("loginPick").hidden = false; $("loginPin").hidden = true;
+  };
+  $("forgot").onclick = () => showLoginStep("reset");
   $("justLook").onclick = closeLogin;
   $("loginPin").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const pin = $("pin1").value.trim(), err = $("loginErr");
-    if (!/^\d{4}$/.test(pin)) return (err.textContent = "PIN musí mít přesně 4 číslice.");
-    try {
-      if (loginMode === "new") {
-        if (pin !== $("pin2").value.trim()) return (err.textContent = "PINy se neshodují, zkus to znovu.");
-        await db.setPin(loginPerson, pin);
-      } else {
-        await db.checkPin(loginPerson, pin);
-      }
-    } catch (x) {
-      if (x.code === "pin_exists") return (err.textContent = "Tohle jméno už PIN má. Klikni Zpět a zkus to znovu.");
-      return (err.textContent = x.code === "bad_pin" ? "Špatný PIN, zkus to znovu." : "Nepodařilo se spojit, zkus to znovu.");
+    const err = $("loginErr");
+    const pin = $("pin1").value.trim();
+    const birth = parseBirth($("birth").value);
+    if (loginMode !== "login" && !birth) return (err.textContent = "Napiš datum narození celé, např. 15. 3. 1985.");
+    if (loginMode !== "birth") {
+      if (!/^\d{4}$/.test(pin)) return (err.textContent = "PIN musí mít přesně 4 číslice.");
+      if (!$("pin2wrap").hidden && pin !== $("pin2").value.trim()) return (err.textContent = "PINy se neshodují, zkus to znovu.");
     }
+    let status = null;
+    try {
+      if (loginMode === "new") await db.setPin(loginPerson, pin, birth);
+      else if (loginMode === "reset") await db.resetPin(loginPerson, birth, pin);
+      else if (loginMode === "birth") await db.setBirth(birth);
+      else { await db.checkPin(loginPerson, pin); status = await db.status(loginPerson).catch(() => null); }
+    } catch (x) {
+      err.textContent = {
+        pin_exists: "Tohle jméno už PIN má. Klikni Zpět a zkus to znovu.",
+        bad_pin: "Špatný PIN, zkus to znovu.",
+        bad_birth: "Datum narození nesedí, zkus to znovu.",
+        no_birth: "U tvého jména není uložené datum narození. Napiš Ivaně, PIN ti smaže.",
+      }[x.code] || "Nepodařilo se spojit, zkus to znovu.";
+      return;
+    }
+    if (loginMode === "birth") { closeLogin(); return toast("Díky, datum narození je uložené."); }
     saveAuth({ person: loginPerson, pin });
-    const then = afterLogin;
+    const then = afterLogin, wasReset = loginMode === "reset";
     closeLogin();
     renderMe();
-    render();
-    toast(`Ahoj, jsi přihlášen/a jako ${loginPerson}.`);
+    load();
+    toast(wasReset ? "Nový PIN je uložený, jsi přihlášen/a." : `Ahoj, jsi přihlášen/a jako ${loginPerson}.`);
+    if (status === "nobirth") return askBirth();
     then?.();
   });
+
+  // kdo má PIN bez data narození, toho jednou za návštěvu požádáme o doplnění
+  function askBirth() {
+    try { if (sessionStorage.getItem("maserna-birth-asked")) return; sessionStorage.setItem("maserna-birth-asked", "1"); } catch {}
+    loginPerson = auth.person;
+    showLoginStep("birth");
+  }
 
   // ---------- okno rezervace ----------
   function newBooking(start, end) {
@@ -928,6 +991,7 @@
   renderMe();
   load();
   if (!auth && !localGet("maserna-seen")) { localSet("maserna-seen", "1"); openLogin(); }
+  if (auth) db.status(auth.person).then((st) => { if (st === "nobirth" && auth) askBirth(); }).catch(() => {});
   setInterval(() => { if (!busy && !document.hidden && !document.querySelector(".backdrop.open")) load(); }, 15000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
   let wasNarrow = narrow();
