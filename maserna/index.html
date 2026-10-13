@@ -339,7 +339,9 @@
     return r.status === 204 ? null : r.json();
   }
   const db = {
-    list: (from, to) => call(`/bookings?select=*&starts_at=lt.${encodeURIComponent(to.toISOString())}&ends_at=gt.${encodeURIComponent(from.toISOString())}&order=starts_at`),
+    // poznámky (jména klientů) nejsou veřejné – dotahují se zvlášť jen pro vlastní rezervace (správkyně vidí všechny)
+    list: (from, to) => call(`/bookings?select=id,person,starts_at,ends_at&starts_at=lt.${encodeURIComponent(to.toISOString())}&ends_at=gt.${encodeURIComponent(from.toISOString())}&order=starts_at`),
+    notes: (from, to) => call("/rpc/my_notes", { p_person: auth.person, p_pin: auth.pin, p_from: from.toISOString(), p_to: to.toISOString() }),
     status: (person) => call("/rpc/person_status", { p_person: person }),
     setPin: (person, pin) => call("/rpc/set_pin", { p_person: person, p_pin: pin }),
     checkPin: (person, pin) => call("/rpc/check_pin", { p_person: person, p_pin: pin }),
@@ -372,7 +374,16 @@
   async function load() {
     const [from, to] = visibleRange();
     try {
-      bookings = await db.list(from, to);
+      const list = await db.list(from, to);
+      if (auth) {
+        try {
+          const notes = new Map((await db.notes(from, to)).map((n) => [n.id, n.note]));
+          list.forEach((b) => { if (notes.has(b.id)) b.note = notes.get(b.id); });
+        } catch (e) {
+          if (e.code === "bad_pin") { saveAuth(null); renderMe(); }
+        }
+      }
+      bookings = list;
     } catch (e) {
       toast("Kalendář se nepodařilo načíst. Zkontroluj internet.");
     }
@@ -690,7 +701,7 @@
         if (!moved) return openModal(b);
         if (+ns === +os && +ne === +oe) return render();
         if (conflictWith(ns, ne, b.id)) { toast(OVERLAP); return render(); }
-        await save(b.id, { starts_at: ns.toISOString(), ends_at: ne.toISOString(), note: b.note });
+        await save(b.id, { starts_at: ns.toISOString(), ends_at: ne.toISOString(), note: null });
       };
       addEventListener("pointermove", move);
       addEventListener("pointerup", up);
@@ -816,7 +827,7 @@
       const around = await db.list(s, en);
       if (around.some((x) => x.id !== editing?.id)) return (err.textContent = OVERLAP);
     } catch {}
-    const data = { note: $("mnote").value.trim() || null, starts_at: s.toISOString(), ends_at: en.toISOString() };
+    const data = { note: $("mnote").value.trim(), starts_at: s.toISOString(), ends_at: en.toISOString() };
     const id = editing?.id;
     const res = await save(id, data);
     if (res === true) {
