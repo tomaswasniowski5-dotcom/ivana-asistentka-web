@@ -12,6 +12,9 @@ window.MASERNA_CONFIG = {
     { name: "Honza", color: "#5f6670" },  // šedá
   ],
 
-  // Rozsah dne, na který se kalendář po otevření posune.
-  dayStartHour: 7,
+  // Správkyně – smí měnit a mazat i rezervace ostatních (v databázi je to sloupec people.is_admin).
+  admins: ["Ivana"],
+
+  // Od kolika hodin kalendář začíná (dřív rezervovat nejde).
+  gridStartHour: 6,
 };

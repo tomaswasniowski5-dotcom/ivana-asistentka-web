@@ -92,6 +92,7 @@
   .tg-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; position: relative; }
   .tg-body { display: flex; position: relative; height: calc(var(--hour) * 24); user-select: none; -webkit-user-select: none; }
   .tg-body .gut { width: var(--gutter); flex: none; position: relative; }
+  .hl.first { transform: none; top: 3px !important; }
   .hl { position: absolute; right: 8px; font-size: 12px; font-weight: 600; color: var(--muted); transform: translateY(-50%); }
   .col { flex: 1; min-width: 0; position: relative; border-left: 1px solid var(--line); cursor: pointer;
     background-color: rgba(255,255,255,.6);
@@ -168,27 +169,36 @@
 
   .fab { display: none; }
   @media (max-width: 760px) {
-    .hero { padding: 10px 12px; gap: 10px; }
-    .hero img { width: 46px; height: 46px; }
-    .hero h1 { font-size: 21px; }
-    .hero .sub { font-size: 11px; }
-    .me { flex-direction: column; align-items: flex-end; gap: 4px; font-size: 14px; }
+    /* mobil: lišty co nejnižší, ať kalendář zabírá většinu obrazovky */
+    .hero { padding: 6px 12px; gap: 10px; }
+    .hero img { width: 34px; height: 34px; box-shadow: 0 0 0 1.5px rgba(255,255,255,.85); }
+    .hero h1 { font-size: 19px; }
+    .hero .sub, .me .melbl { display: none; }
+    .me { gap: 8px; font-size: 14px; }
     .me button { padding: 4px 10px; font-size: 13px; }
-    .bar { padding: 10px 12px; gap: 8px; }
-    .bar .add { display: none; }
-    .nav { width: 100%; }
-    .nav .btn { flex: 1; padding: 10px 6px; font-size: 14px; }
-    .range { font-size: 17px; width: 100%; text-align: center; order: -1; }
-    .seg { width: 100%; }
-    .seg button { flex: 1; }
-    .info { padding: 6px 12px; font-size: 13px; }
-    .info .tip { display: none; }
-    :root { --gutter: 46px; --hour: 56px; }
-    .dh .dn { font-size: 18px; width: 34px; height: 34px; line-height: 34px; }
+    .bar { display: grid; grid-template-columns: 72px 1fr 72px; grid-template-areas: "prev range next" "seg seg today"; gap: 6px; padding: 6px 10px; }
+    .nav { display: contents; }
+    #prev { grid-area: prev; } #next { grid-area: next; } #today { grid-area: today; }
+    #prev, #next { padding: 0; font-size: 18px; height: 40px; }
+    .range { grid-area: range; font-size: 17px; text-align: center; align-self: center; }
+    .seg { grid-area: seg; }
+    .seg button { flex: 1; padding: 7px 4px; font-size: 14px; }
+    #today { padding: 7px 4px; font-size: 14px; }
+    .bar .add, .bar .spacer, .info { display: none; }
+    :root { --gutter: 38px; --hour: 52px; }
+    .hl { font-size: 11px; right: 5px; }
+    .dh { padding: 3px 0 4px; }
+    .dh .wd { font-size: 11px; }
+    .dh .dn { font-size: 16px; width: 28px; height: 28px; line-height: 28px; margin-top: 1px; }
+    .view-week .ev { left: 1px; right: 2px; padding: 2px 3px; font-size: 11px; line-height: 1.2; border-radius: 5px; }
+    .view-week .ev .when { white-space: normal; }
+    .view-week .ev .note, .view-week .ev .tag { display: none; }
+    .view-week .ev.short > div { display: block; }
+    .view-week .ev.short .when { display: none; }
     .mg { grid-auto-rows: minmax(64px, 1fr); }
     .mc { padding: 2px; }
     .chip { font-size: 10px; padding: 1px 3px; }
-    .fab { display: flex; align-items: center; gap: 8px; position: fixed; right: 14px; bottom: calc(16px + env(safe-area-inset-bottom)); border-radius: 999px; border: 0; background: var(--espresso); color: var(--cream); font-size: 17px; font-weight: 800; padding: 15px 22px; box-shadow: 0 8px 24px rgba(44,34,27,.4); z-index: 20; }
+    .fab { display: flex; align-items: center; gap: 6px; position: fixed; right: 12px; bottom: calc(14px + env(safe-area-inset-bottom)); border-radius: 999px; border: 0; background: var(--espresso); color: var(--cream); font-size: 16px; font-weight: 800; padding: 13px 20px; box-shadow: 0 8px 24px rgba(44,34,27,.4); z-index: 20; }
   }
 </style>
 </head>
@@ -286,6 +296,7 @@
   const PEOPLE = CFG.people || [];
   const SNAP = 15;               // minuty
   const DAY_MIN = 24 * 60;
+  const G0 = (CFG.gridStartHour ?? 6) * 60; // od kolika hodin je kalendář vidět a jde rezervovat
   const $ = (id) => document.getElementById(id);
 
   // ---------- datumy ----------
@@ -309,6 +320,8 @@
   let auth = (() => { try { return JSON.parse(localStorage.getItem("maserna-auth")); } catch { return null; } })();
   const saveAuth = (a) => { auth = a; try { a ? localStorage.setItem("maserna-auth", JSON.stringify(a)) : localStorage.removeItem("maserna-auth"); } catch {} };
   const isMine = (b) => !!auth && b.person === auth.person;
+  const isAdmin = () => !!auth && (CFG.admins || []).includes(auth.person);
+  const canEdit = (b) => isMine(b) || isAdmin();
 
   // ---------- databáze ----------
   const base = CFG.supabaseUrl.replace(/\/$/, "") + "/rest/v1";
@@ -337,8 +350,7 @@
 
   // ---------- stav ----------
   const narrow = () => innerWidth < 760;
-  let view = localGet("maserna-view") || (narrow() ? "day" : "week");
-  if (narrow() && view === "week") view = "day";
+  let view = "week"; // po otevření vždy týden
   let cursor = sod(new Date());
   let bookings = [];
   let busy = false;         // probíhá tažení – nepřekreslovat z pollingu
@@ -400,8 +412,11 @@
   function render() {
     for (const b of document.querySelectorAll("#views button")) b.classList.toggle("on", b.dataset.v === view);
     const unit = { day: "Den", week: "Týden", month: "Měsíc" }[view];
-    $("prev").textContent = `◀ ${unit} zpět`;
-    $("next").textContent = `${unit} dopředu ▶`;
+    $("prev").textContent = narrow() ? "◀" : `◀ ${unit} zpět`;
+    $("next").textContent = narrow() ? "▶" : `${unit} dopředu ▶`;
+    $("prev").setAttribute("aria-label", `${unit} zpět`);
+    $("next").setAttribute("aria-label", `${unit} dopředu`);
+    $("main").className = "main view-" + view;
     $("range").textContent = rangeLabel();
     const sc = document.querySelector(".tg-scroll");
     if (sc) lastScroll = sc.scrollTop;
@@ -411,17 +426,17 @@
   }
 
   function rangeLabel() {
-    if (view === "day") return cap(fmt(cursor, { weekday: "long", day: "numeric", month: "long" }));
+    if (view === "day") return cap(fmt(cursor, { weekday: narrow() ? "short" : "long", day: "numeric", month: "long" }));
     if (view === "month") return cap(fmt(cursor, { month: "long", year: "numeric" }));
     const s = sow(cursor), e = addDays(s, 6);
-    if (s.getMonth() === e.getMonth()) return `${s.getDate()}.–${fmt(e, { day: "numeric", month: "long", year: "numeric" })}`;
+    if (s.getMonth() === e.getMonth()) return `${s.getDate()}.–${fmt(e, narrow() ? { day: "numeric", month: "long" } : { day: "numeric", month: "long", year: "numeric" })}`;
     return `${fmt(s, { day: "numeric", month: "long" })} – ${fmt(e, { day: "numeric", month: "long", year: "numeric" })}`;
   }
 
   function renderMe() {
     const me = $("me");
     if (auth) {
-      me.innerHTML = `<div>Přihlášen/a jako<br><span class="who"><span class="dot" style="background:${colorOf(auth.person)}"></span>${esc(auth.person)}</span></div><button id="logout">Odhlásit</button>`;
+      me.innerHTML = `<div><span class="melbl">Přihlášen/a jako<br></span><span class="who"><span class="dot" style="background:${colorOf(auth.person)}"></span>${esc(auth.person)}</span></div><button id="logout">Odhlásit</button>`;
       $("logout").onclick = () => { saveAuth(null); renderMe(); render(); };
     } else {
       me.innerHTML = `<button id="loginBtn">Přihlásit se</button>`;
@@ -445,9 +460,10 @@
     const scroll = el("div", "tg-scroll");
     const body = el("div", "tg-body");
     const gut = el("div", "gut");
-    for (let h = 1; h < 24; h++) {
-      const l = el("div", "hl");
-      l.style.top = `calc(var(--hour) * ${h})`;
+    body.style.height = `calc(var(--hour) * ${(DAY_MIN - G0) / 60})`;
+    for (let h = G0 / 60; h < 24; h++) {
+      const l = el("div", "hl" + (h === G0 / 60 ? " first" : ""));
+      l.style.top = `calc(var(--hour) * ${h - G0 / 60})`;
       l.textContent = `${h}:00`;
       gut.append(l);
     }
@@ -459,8 +475,8 @@
       layoutDay(d).forEach(({ b, lane, lanes }) => col.append(eventEl(b, lane, lanes)));
       if (sameDay(d, today)) {
         const n = el("div", "now");
-        n.style.top = `calc(var(--hour) * ${minsOf(new Date()) / 60})`;
-        col.append(n);
+        n.style.top = `calc(var(--hour) * ${(minsOf(new Date()) - G0) / 60})`;
+        if (minsOf(new Date()) >= G0) col.append(n);
       }
       attachCreate(col);
       body.append(col);
@@ -469,7 +485,7 @@
     main.append(head, scroll);
 
     head.style.setProperty("--sbw", scroll.offsetWidth - scroll.clientWidth + "px");
-    scroll.scrollTop = lastScroll ?? hourPx() * (CFG.dayStartHour ?? 7);
+    scroll.scrollTop = lastScroll ?? 0;
   }
 
   const hourPx = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hour")) || 52;
@@ -514,14 +530,15 @@
       ev.style.width = `calc(${100 / lanes}% - 8px)`;
     }
     placeEvent(ev, minsOf(s), sameDay(s, e) ? minsOf(e) : DAY_MIN);
-    ev.innerHTML = `<div class="who"></div><div class="when"></div><div class="note"></div>` + (isMine(b) ? `<div class="rs"></div>` : "");
+    ev.innerHTML = `<div class="who"></div><div class="when"></div><div class="note"></div>` + (canEdit(b) ? `<div class="rs"></div>` : "");
     fillEvent(ev, b, s, e);
     attachDrag(ev, b);
     return ev;
   }
 
   function placeEvent(ev, sMin, eMin) {
-    ev.style.top = `calc(var(--hour) * ${sMin / 60})`;
+    sMin = Math.max(sMin, G0);
+    ev.style.top = `calc(var(--hour) * ${(sMin - G0) / 60})`;
     ev.style.height = `calc(var(--hour) * ${(eMin - sMin) / 60} - 2px)`;
     ev.classList.toggle("short", eMin - sMin <= 30);
   }
@@ -571,7 +588,7 @@
     }
     return null;
   }
-  const yToMin = (col, y) => ((y - col.getBoundingClientRect().top) / hourPx()) * 60;
+  const yToMin = (col, y) => G0 + ((y - col.getBoundingClientRect().top) / hourPx()) * 60;
   const snap = (m, f = Math.round) => f(m / SNAP) * SNAP;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
@@ -580,7 +597,7 @@
     col.addEventListener("pointerdown", (e) => {
       if (e.target !== col || e.button > 0) return;
       const touch = e.pointerType === "touch";
-      const m0 = clamp(snap(yToMin(col, e.clientY), Math.floor), 0, DAY_MIN - SNAP);
+      const m0 = clamp(snap(yToMin(col, e.clientY), Math.floor), G0, DAY_MIN - SNAP);
       const x0 = e.clientX, y0 = e.clientY;
       let ghost = null, range = null, cancelled = false;
 
@@ -592,10 +609,10 @@
         if (!ghost && Math.hypot(ev.clientX - x0, ev.clientY - y0) < 5) return;
         busy = true;
         if (!ghost) { ghost = el("div", "ghost"); col.append(ghost); }
-        const m1 = clamp(snap(yToMin(col, ev.clientY), Math.ceil), 0, DAY_MIN);
+        const m1 = clamp(snap(yToMin(col, ev.clientY), Math.ceil), G0, DAY_MIN);
         const s = Math.min(m0, m1), en = Math.max(m0 + SNAP, m1);
         range = [s, en];
-        ghost.style.top = `calc(var(--hour) * ${s / 60})`;
+        ghost.style.top = `calc(var(--hour) * ${(s - G0) / 60})`;
         ghost.style.height = `calc(var(--hour) * ${(en - s) / 60} - 2px)`;
         const d = parseYmd(col.dataset.date);
         ghost.textContent = `${hm(atMin(d, s))}–${hm(atMin(d, en))}`;
@@ -607,7 +624,7 @@
         const d = parseYmd(col.dataset.date);
         let s, en;
         if (range) [s, en] = range;
-        else { s = clamp(Math.floor(m0 / 30) * 30, 0, DAY_MIN - 60); en = s + 60; }
+        else { s = clamp(Math.floor(m0 / 30) * 30, G0, DAY_MIN - 60); en = s + 60; }
         newBooking(atMin(d, s), atMin(d, en));
       };
       const done = () => {
@@ -629,7 +646,7 @@
     ev.addEventListener("pointerdown", (e) => {
       if (e.button > 0) return;
       e.stopPropagation();
-      if (!isMine(b) || e.pointerType === "touch") {
+      if (!canEdit(b) || e.pointerType === "touch") {
         const x0 = e.clientX, y0 = e.clientY;
         const up = (u) => {
           removeEventListener("pointerup", up);
@@ -658,7 +675,7 @@
           const col = colAt(m.clientX) || ev.parentElement;
           if (col !== ev.parentElement) col.append(ev);
           const d = parseYmd(col.dataset.date);
-          const st = clamp(sMin + delta, 0, DAY_MIN - dur);
+          const st = clamp(sMin + delta, G0, DAY_MIN - dur);
           ns = atMin(d, st); ne = new Date(ns.getTime() + dur * 60000);
           placeEvent(ev, st, st + dur);
         }
@@ -753,23 +770,23 @@
 
   function openModal(b, start, end) {
     editing = b;
-    const mine = !b || isMine(b);
+    const mine = !b || canEdit(b);
     if (b) { start = new Date(b.starts_at); end = new Date(b.ends_at); }
     if (!start) {
       const n = new Date();
       const base = sameDay(cursor, sod(n)) || cursor < n ? n : cursor;
-      const m = sameDay(base, n) ? Math.ceil((minsOf(n) + 1) / 30) * 30 : 9 * 60;
+      const m = sameDay(base, n) ? Math.max(Math.ceil((minsOf(n) + 1) / 30) * 30, G0) : 9 * 60;
       start = atMin(base, Math.min(m, DAY_MIN - 60));
       end = new Date(start.getTime() + 3600000);
     }
     const person = b ? b.person : auth.person;
-    $("mtitle").textContent = !b ? "Zarezervovat masérnu" : mine ? "Moje rezervace" : "Masérna je obsazená";
+    $("mtitle").textContent = !b ? "Zarezervovat masérnu" : isMine(b) ? "Moje rezervace" : mine ? "Rezervace – " + b.person : "Masérna je obsazená";
     $("mwho").innerHTML = `<span class="dot" style="background:${colorOf(person)}"></span>${esc(person)}`;
     $("medit").hidden = !mine;
     $("msave").hidden = !mine;
     $("mdelwrap").hidden = !(b && mine);
     $("mcancel").textContent = mine ? "Zavřít" : "OK";
-    $("mview").innerHTML = mine ? "" :
+    $("mview").innerHTML = mine ? (b && !isMine(b) ? `<p class="hint">Upravuješ jako správkyně.</p>` : "") :
       `<p style="margin-top:12px;font-size:17px"><b>${cap(fmt(start, { weekday: "long", day: "numeric", month: "long" }))}</b><br>${hm(start)} – ${hm(end)}${b.note ? "<br>" + esc(b.note) : ""}</p>
        <p class="hint">Tuhle rezervaci může změnit nebo smazat jen ${esc(b.person)}.</p>`;
     $("mdate").value = ymd(start);
@@ -793,6 +810,7 @@
     const s = atMin(d, fh * 60 + fm);
     const en = th === 0 && tm === 0 ? addDays(d, 1) : atMin(d, th * 60 + tm);
     if (en <= s) return (err.textContent = "Čas „Do“ musí být později než „Od“.");
+    if (minsOf(s) < G0) return (err.textContent = `Masérna se dá rezervovat od ${G0 / 60}:00.`);
     // ověř kolize i mimo zrovna zobrazený rozsah
     try {
       const around = await db.list(s, en);
@@ -822,7 +840,7 @@
   $("login").addEventListener("pointerdown", (e) => { if (e.target === $("login")) closeLogin(); });
 
   // ---------- navigace ----------
-  function setView(v) { view = v; localSet("maserna-view", v); lastScroll = null; load(); }
+  function setView(v) { view = v; lastScroll = null; load(); }
   function shift(dir) {
     if (view === "day") cursor = addDays(cursor, dir);
     else if (view === "week") cursor = addDays(cursor, 7 * dir);
@@ -861,9 +879,11 @@
   if (!auth && !localGet("maserna-seen")) { localSet("maserna-seen", "1"); openLogin(); }
   setInterval(() => { if (!busy && !document.hidden && !document.querySelector(".backdrop.open")) load(); }, 15000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
+  let wasNarrow = narrow();
+  addEventListener("resize", () => { if (narrow() !== wasNarrow) { wasNarrow = narrow(); render(); } });
   setInterval(() => {
     const n = document.querySelector(".now");
-    if (n) n.style.top = `calc(var(--hour) * ${minsOf(new Date()) / 60})`;
+    if (n) n.style.top = `calc(var(--hour) * ${(minsOf(new Date()) - G0) / 60})`;
   }, 60000);
 })();
 </script>
