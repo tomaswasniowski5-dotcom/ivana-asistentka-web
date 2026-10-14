@@ -118,6 +118,9 @@
   .ev.short .note { display: none; }
   .ev.dragging { opacity: .85; z-index: 5; }
   .ev .rs { position: absolute; left: 0; right: 0; bottom: 0; height: 8px; cursor: ns-resize; }
+  /* 30 min na úklid a přípravu kolem cizích masáží – jen jemné šrafování */
+  .gap { position: absolute; left: 3px; right: 6px; pointer-events: none; border-radius: 6px;
+    background: repeating-linear-gradient(-45deg, rgba(111,97,85,.11) 0 4px, transparent 4px 9px); }
   .ghost { position: absolute; left: 3px; right: 6px; border-radius: 8px; background: rgba(44,34,27,.15); border: 2px dashed var(--espresso); font-size: 13px; padding: 3px 8px; color: var(--espresso); font-weight: 700; pointer-events: none; }
 
   .now { position: absolute; left: -1px; right: 0; height: 2px; background: var(--now); z-index: 4; pointer-events: none; }
@@ -160,6 +163,8 @@
   .pin { font-size: 28px !important; letter-spacing: .5em; text-align: center; }
   .err { color: var(--now); font-size: 15px; font-weight: 600; margin-top: 12px; }
   .err:empty { display: none; }
+  .gaptip { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--linen); border: 1px solid var(--line-strong); font-size: 15px; line-height: 1.45; color: var(--ink); }
+  .gaptip button { margin-top: 10px; width: 100%; }
   .actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
   .actions .btn { flex: 1; padding: 12px 16px; font-size: 16px; }
   .btn-danger { color: var(--now); border-color: #e9c3bd; }
@@ -300,6 +305,7 @@
       <input type="text" id="mnote" maxlength="80" placeholder="např. jméno klienta">
     </div>
     <div id="mview"></div>
+    <div class="gaptip" id="mgap" hidden><div id="mgaptext"></div><button type="button" class="btn" id="mgapfix"></button></div>
     <div class="err" id="merr"></div>
     <div class="actions">
       <button type="button" class="btn" id="mcancel">Zavřít</button>
@@ -418,8 +424,45 @@
     bookings.find((b) => b.id !== ignoreId && new Date(b.starts_at) < end && new Date(b.ends_at) > start);
   const OVERLAP = "V tu dobu už je masérna rezervovaná.";
 
+  // Mezi masážemi dvou různých masérů musí být pauza na úklid a přípravu (klient se zdrží, masér zaspí…).
+  // Stejný masér si může dát masáže hned za sebou.
+  const GAP = CFG.gapMinutes ?? 30;
+  const komu = (name) => (PEOPLE.find((p) => p.name === name) || {}).komu || name;
+  function gapIssue(person, start, end, ignoreId, list = bookings) {
+    const g = GAP * 60000;
+    for (const b of list) {
+      if (b.id === ignoreId || b.person === person) continue;
+      const bs = new Date(b.starts_at), be = new Date(b.ends_at);
+      if (bs < end && be > start) continue; // překryv hlídá conflictWith
+      if (be <= start && +be + g > +start) return { b, kind: "after", at: new Date(+be + g) };
+      if (bs >= end && +bs - g < +end) return { b, kind: "before", at: new Date(+bs - g) };
+    }
+    return null;
+  }
+  function gapText(gi, html) {
+    const t = (d) => (html ? `<b>${hm(d)}</b>` : hm(d));
+    return gi.kind === "after"
+      ? `Dej ${esc(komu(gi.b.person))} ${GAP} minut na úklid masérny a sobě na přípravu. Začít můžeš nejdřív v ${t(gi.at)}.`
+      : `${esc(gi.b.person)} začíná v ${hm(new Date(gi.b.starts_at))}. Nech ${GAP} minut na přípravu a skonči nejpozději v ${t(gi.at)}.`;
+  }
+  // posune nový termín tak, aby dodržel pauzu (když to jde v rámci dne); jinak ho nechá být
+  function fitGap(person, start, end) {
+    let s = start, e = end;
+    const dur = end - start;
+    for (let i = 0; i < 5; i++) {
+      const gi = gapIssue(person, s, e);
+      if (!gi) break;
+      if (gi.kind === "after") { s = gi.at; e = new Date(+s + dur); }
+      else { e = gi.at; s = new Date(+e - dur); }
+    }
+    const ok = !gapIssue(person, s, e) && !conflictWith(s, e) && sameDay(s, start) && minsOf(s) >= G0 &&
+      (sameDay(e, start) || minsOf(e) === 0);
+    return ok ? [s, e] : [start, end];
+  }
+
   function explain(e) {
     if (e.code === "overlap") return OVERLAP;
+    if (e.code === "gap") return `Mezi masážemi různých masérů musí být ${GAP} minut na úklid a přípravu.`;
     if (e.code === "not_owner") return "Tuhle rezervaci může měnit jen ten, kdo ji vytvořil.";
     if (e.code === "bad_pin") { saveAuth(null); renderMe(); return "PIN nesedí. Přihlas se prosím znovu."; }
     return "Něco se pokazilo, zkus to znovu. (" + e.message + ")";
@@ -507,6 +550,7 @@
     for (const d of days) {
       const col = el("div", "col" + (sameDay(d, today) ? " today" : d < today ? " past" : ""));
       col.dataset.date = ymd(d);
+      gapBands(d).forEach((g) => col.append(g));
       layoutDay(d).forEach(({ b, lane, lanes }) => col.append(eventEl(b, lane, lanes)));
       if (sameDay(d, today)) {
         const n = el("div", "now");
@@ -551,6 +595,26 @@
       clusterEnd = Math.max(clusterEnd, e);
     }
     if (cluster.length) flush();
+    return out;
+  }
+
+  // jemně vyšrafovaná půlhodina před a po cizích masážích
+  function gapBands(day) {
+    const out = [];
+    const band = (s, e) => {
+      s = Math.max(s, G0); e = Math.min(e, DAY_MIN);
+      if (e <= s) return;
+      const g = el("div", "gap");
+      g.style.top = `calc(var(--hour) * ${(s - G0) / 60})`;
+      g.style.height = `calc(var(--hour) * ${(e - s) / 60})`;
+      out.push(g);
+    };
+    for (const b of bookings) {
+      if (isMine(b)) continue;
+      const s = new Date(b.starts_at), e = new Date(b.ends_at);
+      if (sameDay(s, day)) band(minsOf(s) - GAP, minsOf(s));
+      if (sameDay(e, day)) band(minsOf(e), minsOf(e) + GAP);
+    }
     return out;
   }
 
@@ -725,6 +789,8 @@
         if (!moved) return openModal(b);
         if (+ns === +os && +ne === +oe) return render();
         if (conflictWith(ns, ne, b.id)) { toast(OVERLAP); return render(); }
+        const gi = gapIssue(b.person, ns, ne, b.id);
+        if (gi) { toast(gapText(gi)); return render(); }
         await save(b.id, { starts_at: ns.toISOString(), ends_at: ne.toISOString(), note: null });
       };
       addEventListener("pointermove", move);
@@ -853,6 +919,7 @@
   // ---------- okno rezervace ----------
   function newBooking(start, end) {
     if (!auth) return openLogin(() => newBooking(start, end));
+    if (start) [start, end] = fitGap(auth.person, start, end);
     openModal(null, start, end);
   }
 
@@ -866,6 +933,7 @@
       const m = sameDay(base, n) ? Math.max(Math.ceil((minsOf(n) + 1) / 30) * 30, G0) : 9 * 60;
       start = atMin(base, Math.min(m, DAY_MIN - 60));
       end = new Date(start.getTime() + 3600000);
+      [start, end] = fitGap(auth.person, start, end);
     }
     const person = b ? b.person : auth.person;
     $("mtitle").textContent = !b ? "Zarezervovat masérnu" : isMine(b) ? "Moje rezervace" : mine ? "Rezervace – " + b.person : "Masérna je obsazená";
@@ -899,7 +967,30 @@
   function syncDur() {
     dur = timeOf("mto") - timeOf("mfrom");
     for (const b of $("durs").children) b.classList.toggle("on", +b.dataset.min === dur);
+    checkGap();
   }
+
+  // v okně rezervace hned ukáže, když je termín moc blízko cizí masáži, a nabídne opravu jedním klikem
+  function checkGap() {
+    $("mgap").hidden = true;
+    if ($("medit").hidden || !$("mdate").value) return null;
+    const d = parseYmd($("mdate").value);
+    const from = timeOf("mfrom"), to = timeOf("mto");
+    const person = editing ? editing.person : auth?.person;
+    const gi = person && to > from ? gapIssue(person, atMin(d, from), atMin(d, to), editing?.id) : null;
+    if (!gi) return null;
+    $("mgaptext").innerHTML = gapText(gi, true);
+    let f, t;
+    if (gi.kind === "after") { f = minsOf(gi.at); t = Math.min(f + (to - from), DAY_MIN); }
+    else { t = minsOf(gi.at); f = from < t ? from : t - (to - from); }
+    const fixable = sameDay(gi.at, d) && f >= G0 && t > f;
+    $("mgapfix").hidden = !fixable;
+    $("mgapfix").textContent = gi.kind === "after" ? `Začít v ${hm(gi.at)}` : `Skončit v ${hm(gi.at)}`;
+    $("mgapfix").onclick = () => { $("merr").textContent = ""; setTime("mfrom", f); setTime("mto", t); syncDur(); };
+    $("mgap").hidden = false;
+    return gi;
+  }
+  $("mdate").onchange = checkGap;
   for (const b of $("durs").children) b.onclick = () => {
     const end = timeOf("mfrom") + +b.dataset.min;
     if (end > DAY_MIN) return ($("merr").textContent = "Masáž by končila po půlnoci, zvol dřívější začátek.");
@@ -925,10 +1016,15 @@
     const en = atMin(d, timeOf("mto")); // 24:00 = půlnoc
     if (en <= s) return (err.textContent = "Čas „Do“ musí být později než „Od“.");
     if (minsOf(s) < G0) return (err.textContent = `Masérna se dá rezervovat od ${G0 / 60}:00.`);
+    const person = editing ? editing.person : auth.person;
+    const gapMsg = "Posuň prosím čas podle rady výše.";
+    if (checkGap()) return (err.textContent = gapMsg);
     // ověř kolize i mimo zrovna zobrazený rozsah
     try {
-      const around = await db.list(s, en);
-      if (around.some((x) => x.id !== editing?.id)) return (err.textContent = OVERLAP);
+      const around = await db.list(new Date(+s - GAP * 60000), new Date(+en + GAP * 60000));
+      if (around.some((x) => x.id !== editing?.id && new Date(x.starts_at) < en && new Date(x.ends_at) > s)) return (err.textContent = OVERLAP);
+      const gi = gapIssue(person, s, en, editing?.id, around);
+      if (gi) return (err.textContent = gapText(gi));
     } catch {}
     const data = { note: $("mnote").value.trim(), starts_at: s.toISOString(), ends_at: en.toISOString() };
     const id = editing?.id;
