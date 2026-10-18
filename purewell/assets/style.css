@@ -430,7 +430,27 @@ details.expert .body h4:first-child { margin-top: 0; }
 .restart-lead { font-family: var(--serif); font-size: clamp(24px, 3vw, 30px); line-height: 1.35; color: var(--espresso); margin-bottom: 22px; }
 @media (max-width: 760px) { .restart-grid { grid-template-columns: 1fr; gap: 28px; } .restart-leaf { max-width: 170px; } }
 
-/* Široký pás z masérny nad službami */
-.maserna-band { position: relative; height: clamp(200px, 30vw, 400px); overflow: hidden; background: var(--linen); }
-.maserna-band img { width: 100%; height: 100%; object-fit: cover; object-position: center 62%; }
-.maserna-band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(44,34,27,.18) 0%, rgba(44,34,27,0) 30%, rgba(244,236,224,0) 65%, var(--linen) 100%); }
+/* ===== Služby 2.0 – výraznější karty ===== */
+.offers-sec { position: relative; overflow: hidden; }
+.offers-sec::before { content: ""; position: absolute; width: 560px; height: 560px; right: -160px; top: -120px; background: url(logo-mark.webp) center/contain no-repeat; opacity: .07; pointer-events: none; }
+.offers-sec .wrap { position: relative; }
+.offers { gap: 28px; align-items: stretch; }
+.offer { border: 0; border-radius: 22px; background: #fffcf6; box-shadow: 0 22px 50px -30px rgba(44,34,27,.45), 0 0 0 1px rgba(176,138,82,.22); }
+.offer:hover { transform: translateY(-6px); box-shadow: 0 34px 70px -32px rgba(44,34,27,.55), 0 0 0 1px var(--gold); }
+.offer-photo img { transition: transform .6s ease; }
+.offer:hover .offer-photo img { transform: scale(1.05); }
+.offer-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(44,34,27,0) 60%, rgba(44,34,27,.35) 100%); }
+.offer-tag { position: absolute; z-index: 1; top: 16px; left: 16px; font-family: var(--caps); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--espresso); background: rgba(251,247,240,.92); border: 1px solid var(--gold); border-radius: 999px; padding: 7px 14px 6px 17px; backdrop-filter: blur(4px); }
+.offer-body { padding: 26px 26px 24px; position: relative; }
+.offer-body::before { content: ""; position: absolute; top: 0; left: 26px; right: 26px; height: 3px; background: linear-gradient(90deg, var(--gold), #e3c48f, var(--gold)); border-radius: 0 0 3px 3px; }
+.offer-body h3 { order: -1; font-size: clamp(29px, 2.6vw, 34px); font-weight: 700; letter-spacing: -.01em; line-height: 1.12; margin: 6px 0 16px; }
+.offer-body h3 a { color: var(--espresso); }
+.offer-chips { margin-bottom: 22px; }
+.offer-list { border-top: 0; display: grid; gap: 10px; }
+.offer-list li a { border: 1px solid var(--gold-soft); border-radius: 14px; padding: 14px 16px; background: var(--linen); font-weight: 700; font-size: 15.5px; color: var(--espresso); align-items: center; transition: background .2s, border-color .2s, color .2s; }
+.offer-list li:last-child a { border-bottom: 1px solid var(--gold-soft); }
+.offer-list .arr { flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--espresso); color: var(--cream); display: grid; place-items: center; font-size: 15px; transition: background .2s, transform .2s; }
+.offer-list li a:hover { background: var(--espresso); border-color: var(--espresso); color: var(--cream); }
+.offer-list li a:hover small { color: #d2b17c; }
+.offer-list li a:hover .arr { background: var(--gold); transform: translateX(3px); }
+@media (max-width: 860px) { .offers-sec::before { width: 320px; height: 320px; right: -120px; top: -60px; } }
