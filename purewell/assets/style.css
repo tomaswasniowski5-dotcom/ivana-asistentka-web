@@ -345,3 +345,92 @@ details.expert .body h4:first-child { margin-top: 0; }
 /* štítky pod fotkou, v barvě loga */
 .offer-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 .offer-chips span { font-size: 12.5px; font-weight: 500; color: #7a5a2e; background: #efe2cb; border: 1px solid #dcc59e; border-radius: 999px; padding: 4px 11px; }
+
+/* ===== Úvod 2.0 – fotka přes celou šíři, vlevo mlha pod textem ===== */
+:root { --tan: #c2a37a; --tan-deep: #a9895f; }
+.hero-full { position: relative; overflow: hidden; padding: 0; min-height: clamp(640px, 88vh, 860px); display: flex; align-items: center; text-align: left; }
+.hero-bg { position: absolute; inset: 0; }
+.hero-bg img { position: absolute; object-fit: cover; }
+/* rozmazaná, zesvětlená kopie fotky dotváří zbytek parku jako mlhu */
+.hero-bg-haze { inset: -60px; width: calc(100% + 120px); height: calc(100% + 120px); object-position: center 45%; filter: blur(34px) saturate(.85) brightness(1.08); transform: scaleX(-1); }
+.hero-bg-main { top: 0; right: 0; width: 62%; height: 100%; object-position: 30% 58%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 15%, rgba(0,0,0,.7) 33%, #000 55%);
+          mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 15%, rgba(0,0,0,.7) 33%, #000 55%); }
+.hero-bg::after { content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(251,247,240,.94) 0%, rgba(251,247,240,.86) 30%, rgba(251,247,240,.45) 50%, rgba(251,247,240,0) 66%),
+    linear-gradient(180deg, rgba(251,247,240,0) 78%, var(--cream) 100%); }
+.hero-full .wrap { position: relative; z-index: 1; width: 100%; }
+.hero-full .hero-text { max-width: 560px; padding: 70px 0 90px; }
+.hero-full .logo { width: min(190px, 50vw); margin: 0 0 26px; }
+.hero-full h1 { font-size: clamp(36px, 4.6vw, 54px); max-width: 560px; }
+.hero-full .lead { margin: 22px 0 0; font-size: 18.5px; }
+.hero-full .btns { justify-content: flex-start; }
+.hero-quote { font-style: italic; font-weight: 500; }
+@media (max-width: 860px) {
+  .hero-full { min-height: 0; display: block; text-align: center; }
+  .hero-bg-main { width: 100%; height: 72vh; object-position: 32% 62%;
+    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 55%, transparent 100%); }
+  .hero-bg::after { background: linear-gradient(180deg, rgba(251,247,240,.55) 0%, rgba(251,247,240,0) 22%, rgba(251,247,240,0) 42%, rgba(251,247,240,.9) 66%, var(--cream) 82%); }
+  .hero-full .hero-text { margin: 0 auto; padding: 24px 0 64px; }
+  .hero-full .logo { display: none; }
+  .hero-full .hero-text { padding-top: 56vh; }
+  .hero-full h1, .hero-full .lead { margin-left: auto; margin-right: auto; }
+  .hero-full .btns { justify-content: center; }
+}
+
+/* Rámovaná fotka s posunutou zlatou linkou */
+.framed-photo { margin: 0; position: relative; }
+.framed-photo::before { content: ""; position: absolute; inset: -18px 18px 18px -18px; border: 1px solid var(--espresso); border-radius: var(--radius); opacity: .35; }
+.framed-photo img { position: relative; width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--radius); box-shadow: 0 30px 60px -34px rgba(44,34,27,.65); }
+.framed-photo.dark::before { border-color: #d2b17c; opacity: .6; inset: -18px -18px 18px 18px; }
+.framed-photo figcaption { position: relative; font-size: 13.5px; color: #b9aa98; margin-top: 14px; font-style: italic; }
+@media (max-width: 860px) { .framed-photo { max-width: 440px; margin: 0 auto 0 18px; } .framed-photo.dark { margin: 18px 18px 0 auto; } }
+
+/* Kdo jsem – nejtmavší béžová z loga */
+.bg-tan { background: var(--tan); color: var(--espresso); }
+.bg-tan .eyebrow { color: var(--espresso); opacity: .75; }
+.bg-tan p { color: #2f251d; }
+.who h2 { margin-bottom: 6px; }
+.who-role { font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1.35; color: #4a3a2b !important; margin-bottom: 22px; }
+.who .btn:hover { background: var(--cream); color: var(--espresso); border-color: var(--cream); }
+
+/* Odbornost */
+.exp-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }
+.exp-years { background: var(--linen); border: 1px solid var(--gold-soft); border-radius: var(--radius); padding: 36px 32px; text-align: center; position: sticky; top: 100px; }
+.exp-years .num { font-family: var(--serif); font-size: clamp(72px, 9vw, 104px); line-height: .9; color: var(--gold-deep); display: block; }
+.exp-years h3 { font-family: var(--caps); font-size: 14px; letter-spacing: .24em; text-transform: uppercase; margin: 14px 0 22px; }
+.exp-fields { list-style: none; display: grid; gap: 0; border-top: 1px solid var(--gold-soft); }
+.exp-fields li { font-family: var(--serif); font-size: 23px; color: var(--espresso); padding: 10px 0; border-bottom: 1px solid var(--gold-soft); }
+.exp-block + .exp-block { margin-top: 34px; }
+.exp-block h4 { font-family: var(--caps); font-weight: 400; font-size: 14px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 16px; }
+.tagcloud { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.tagcloud li { font-size: 14px; font-weight: 500; color: #7a5a2e; background: #efe2cb; border: 1px solid #dcc59e; border-radius: 999px; padding: 6px 14px; }
+.exp-note { margin-top: 30px; padding: 20px 22px; border-left: 2px solid var(--gold); background: rgba(176,138,82,.07); border-radius: 0 10px 10px 0; font-size: 16px; }
+.exp-note a { font-weight: 600; text-decoration: none; white-space: nowrap; }
+.authentic { margin-top: 72px; display: grid; grid-template-columns: 150px 1fr; gap: 40px; align-items: center; background: var(--espresso); color: #e9dfd0; border-radius: 20px; padding: 44px 48px; position: relative; overflow: hidden; }
+.authentic img { width: 150px; filter: drop-shadow(0 10px 24px rgba(0,0,0,.4)); }
+.authentic h3 { color: var(--cream); font-size: clamp(26px, 3vw, 34px); margin-bottom: 12px; }
+.authentic .eyebrow { color: #d2b17c; }
+.authentic p { color: #d9ccb9; font-size: 17px; }
+@media (max-width: 860px) {
+  .exp-grid { grid-template-columns: 1fr; gap: 36px; }
+  .exp-years { position: static; }
+  .authentic { grid-template-columns: 1fr; padding: 34px 26px; text-align: left; gap: 18px; }
+  .authentic img { width: 90px; }
+}
+
+/* O brandu */
+.brand-quote { font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3.6vw, 40px); line-height: 1.25; color: #e3c48f; margin: 10px 0 26px; padding-left: 22px; border-left: 2px solid #d2b17c; }
+
+/* Nikdy není pozdě začít */
+.restart-grid { display: grid; grid-template-columns: 300px 1fr; gap: 64px; align-items: center; }
+.restart-leaf { width: 100%; max-width: 300px; margin: 0 auto; filter: drop-shadow(0 20px 40px rgba(142,108,60,.25)); }
+.restart-lead { font-family: var(--serif); font-size: clamp(24px, 3vw, 30px); line-height: 1.35; color: var(--espresso); margin-bottom: 22px; }
+@media (max-width: 760px) { .restart-grid { grid-template-columns: 1fr; gap: 28px; } .restart-leaf { max-width: 170px; } }
+
+/* Široký pás z masérny nad službami */
+.maserna-band { position: relative; height: clamp(200px, 30vw, 400px); overflow: hidden; background: var(--linen); }
+.maserna-band img { width: 100%; height: 100%; object-fit: cover; object-position: center 62%; }
+.maserna-band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(44,34,27,.18) 0%, rgba(44,34,27,0) 30%, rgba(244,236,224,0) 65%, var(--linen) 100%); }

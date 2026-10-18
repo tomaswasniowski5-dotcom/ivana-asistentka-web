@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600&family=Marcellus&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=2">
+<link rel="stylesheet" href="assets/style.css?v=3">
 </head>
 <body>
 
@@ -20,8 +20,8 @@
     <button class="menu-btn" aria-expanded="false" aria-controls="nav">MENU</button>
     <nav class="nav" id="nav">
       <a href="#sluzby">Služby</a>
-      <a href="o-mne/">O mně</a>
-      <a href="#filozofie">Filozofie</a>
+      <a href="#kdo-jsem">Kdo jsem</a>
+      <a href="#pure-well">Pure Well</a>
       <a class="btn" href="#kontakt">Objednat termín</a>
     </nav>
   </div>
@@ -29,28 +29,48 @@
 
 <main>
 
-<section class="home-hero">
-  <div class="wrap hero-grid">
+<section class="home-hero hero-full">
+  <div class="hero-bg" aria-hidden="true">
+    <img class="hero-bg-haze" src="assets/foto/hero-park.webp" alt="">
+    <img class="hero-bg-main" src="assets/foto/hero-park.webp" alt="">
+  </div>
+  <div class="wrap">
     <div class="hero-text">
       <img class="logo" src="assets/logo-full.webp" alt="Pure Well">
-      <h1>Tělo a mysl jsou propojené nádoby. Proto pečuji o obě.</h1>
-      <p class="lead">Bolí tě záda ze sezení, tělo nestíhá regenerovat po tréninku a hlava nevypíná? Jako sportovkyně znám přetížení i zranění z vlastního těla a vím, jaké je vracet se po nemoci. Za 8 let jsem se naučila, že každý klient potřebuje naprosto komplexní a individuální péči.</p>
+      <h1 class="hero-quote">„Tělo a mysl jsou propojené nádoby. Proto pečuji o&nbsp;obě.“</h1>
+      <p class="lead">Bolí tě záda, tělo nestíhá regenerovat a hlava nevypíná? Propojuji hloubkovou práci s tělem, regulaci nervového systému a vědomou práci s myslí. Za 8 let praxe vím, že každý potřebuje komplexní a naprosto individuální péči, ne šablonu.</p>
       <div class="btns">
         <a class="btn" href="#kontakt">Objednat termín</a>
         <a class="btn ghost" href="#sluzby">Prohlédnout služby</a>
       </div>
     </div>
-    <figure class="hero-portrait">
-      <img src="assets/foto/portret.webp" alt="Ivana Soukupová">
-      <figcaption>Ivana Soukupová · masérka, akreditovaná trenérka a peer konzultantka</figcaption>
-    </figure>
   </div>
 </section>
 
+<section class="bg-tan who" id="kdo-jsem">
+  <div class="wrap grid-2">
+    <figure class="framed-photo">
+      <img src="assets/foto/portret.webp" alt="Ivana Soukupová" loading="lazy" style="object-position:center 20%">
+    </figure>
+    <div>
+      <span class="eyebrow">Kdo jsem?</span>
+      <h2>Jmenuji se Ivana Soukupová</h2>
+      <p class="who-role">Masérka, akreditovaná trenérka a peer konzultantka v oblasti duševního zdraví</p>
+      <p>S masážemi jsem začala v 18 letech. Za osm let individuální praxe mi pod rukama prošli sportovci, bojovníci i lidé s náročným životem.</p>
+      <p>Na vlastní kůži jsem zažila, co dokáže práce s tělem a nervovým systémem. Pomohla mi zotavit se i tam, kde lékaři už nedávali naději. Tahle zkušenost dnes prostupuje vším, co dělám.</p>
+      <div class="btns"><a class="btn" href="o-mne/">Celý můj příběh</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="maserna-band" aria-hidden="true"><img src="assets/foto/maserna-pruh.webp" alt="" loading="lazy"></div>
+
 <section class="bg-linen" id="sluzby">
   <div class="wrap">
-    <div class="section-head">
-      <h2>Co právě teď potřebuješ?</h2>
+    <div class="section-head center">
+      <span class="eyebrow">Služby</span>
+      <h2>Co právě teď hledáš?</h2>
+      <div class="divider"><span></span></div>
     </div>
 
     <div class="offers">
@@ -74,7 +94,7 @@
         </a>
         <div class="offer-body">
           <div class="offer-chips"><span>Životní křižovatka</span><span>Vztahy</span><span>Práce a směřování</span><span>Opakující se vzorce</span></div>
-          <h3><a class="offer-link" href="tarot-mentoring/">Jasno v tom, co dál</a></h3>
+          <h3><a class="offer-link" href="tarot-mentoring/">Praktický tarot s jasným vedením</a></h3>
           <ul class="offer-list">
             <li><a href="tarot-mentoring/"><span class="t">Tarotový mentoring <small>online</small></span><span class="arr">→</span></a></li>
           </ul>
@@ -86,10 +106,10 @@
           <img src="assets/foto/peer-tehdy-dnes.webp" alt="" loading="lazy" style="object-position:center top">
         </a>
         <div class="offer-body">
-          <div class="offer-chips"><span>Deprese</span><span>BAP</span><span>Úzkosti</span><span>Invalidita</span></div>
-          <h3><a class="offer-link" href="peer-mentoring/">Tvoje parťačka na cestě zotavení</a></h3>
+          <div class="offer-chips"><span>Deprese</span><span>BAP</span><span>Úzkosti</span><span>Invalidita</span><span>Vyhoření</span><span>Autenticita</span><span>Sebevědomí</span></div>
+          <h3><a class="offer-link" href="peer-mentoring/">Potřebuju si dát život dohromady</a></h3>
           <ul class="offer-list">
-            <li><a href="peer-mentoring/"><span class="t">Peer konzultace &amp; mentoring <small>online</small></span><span class="arr">→</span></a></li>
+            <li><a href="peer-mentoring/"><span class="t">Recovery &amp; lifestyle koučink <small>online</small></span><span class="arr">→</span></a></li>
           </ul>
         </div>
       </article>
@@ -97,66 +117,81 @@
   </div>
 </section>
 
-<section>
+<section class="expertise">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Proč Pure Well</span>
-      <h2>Co ode mě můžeš čekat</h2>
+    <div class="section-head center">
+      <span class="eyebrow">Odbornost</span>
+      <h2>Kde jsem získala svou odbornost a&nbsp;zkušenosti?</h2>
+      <div class="divider"><span></span></div>
     </div>
-    <div class="stats">
-      <div class="stat"><span class="num">8 let</span><h3>Individuální praxe</h3><p>Prvních pět let jsem masírovala na denní bázi. Byla to moje hlavní práce, ne činnost na okraj.</p></div>
-      <div class="stat"><span class="num">3 000+</span><h3>Ošetření</h3><p>Řada stálých klientů ke mně chodí už od mých začátků v 18 letech.</p></div>
-      <div class="stat"><span class="num">16</span><h3>Certifikátů</h3><p>Sportovní vysoká škola VŠTVS Palestra a kurzy od masáží a trigger pointů po trenérství a peer konzultace.</p></div>
-    </div>
-    <div class="grid-2 principles">
-      <div class="point">
-        <span class="num">I.</span>
-        <h3>S nervovým systémem, ne proti němu</h3>
-        <p>Nejhlubší uvolnění přichází, když se tělo cítí v bezpečí. Proto netlačím silou proti jeho obraně.</p>
+
+    <div class="exp-grid">
+      <div class="exp-years">
+        <span class="num">8 let</span>
+        <h3>Individuální praxe</h3>
+        <ul class="exp-fields">
+          <li>Masérství</li>
+          <li>Somatika</li>
+          <li>Lifestyle koučink</li>
+          <li>Práce s tarotem</li>
+        </ul>
       </div>
-      <div class="point">
-        <span class="num">II.</span>
-        <h3>Vlastní zkušenost</h3>
-        <p>Vím, co znamená zotavovat se – z úzkostí, z nemoci i z prognózy, která nedávala šanci.</p>
+
+      <div class="exp-edu">
+        <div class="exp-block">
+          <h4>Vzdělání</h4>
+          <ul class="checklist">
+            <li><strong>VŠTVS Palestra</strong> – tříleté vysokoškolské studium sportovní a pohybové specializace</li>
+            <li>Instruktor zdravotní tělovýchovy a instruktor fitness II. třídy</li>
+            <li>Akreditovaný kurz pro peer konzultanty v oblasti duševního zdraví</li>
+          </ul>
+        </div>
+        <div class="exp-block">
+          <h4>Ve své práci používám</h4>
+          <ul class="tagcloud">
+            <li>Deep tissue</li><li>Terapie trigger pointů</li><li>Mobilizace páteře</li><li>Postizometrická relaxace</li><li>Myofasciální release</li><li>Dornova metoda</li><li>Breussova masáž</li><li>Thajská masáž</li><li>Kineziotaping</li><li>Práce s dechem</li><li>Pendulace</li><li>Koučink</li>
+          </ul>
+        </div>
+        <p class="exp-note">Vzdělávám se neustále. Sleduji nejnovější výzkumy a dělám si vlastní rešerše, abych klientům mohla nabídnout to nejlepší, co dnes o těle a nervovém systému víme. <a href="o-mne/#vzdelani">Kompletní přehled kurzů →</a></p>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="bg-linen">
-  <div class="wrap grid-2">
-    <figure class="then-photo"><img src="assets/foto/dnes-box.webp" alt="Ivana při tréninku boxu" loading="lazy" style="object-position:60% 30%"><figcaption>Box je mou vášní dodnes.</figcaption></figure>
-    <div>
-      <span class="eyebrow">O mně</span>
-      <h2>Lidské tělo je moje celoživotní fascinace</h2>
-      <p>Jmenuji se Ivana Soukupová. S masážemi jsem začala v 18 letech a za osm let individuální praxe mi pod rukama prošli sportovci, bojovníci i lidé s náročným životem.</p>
-      <p>Na vlastní kůži jsem zažila, co dokáže práce s tělem a nervovým systémem – pomohla mi zotavit se i tam, kde lékaři už nedávali naději. Tahle zkušenost dnes prostupuje vším, co dělám.</p>
-      <div class="btns"><a class="btn ghost" href="o-mne/">Celý příběh</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="bg-dark" id="filozofie">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Filozofie Pure Well</span>
-      <h2>Body · Mind · Spirit</h2>
-      <p class="tagline">Cítit se dobře není luxus. Je to standard.</p>
-    </div>
-    <p class="philo-lead">Tělo a mysl:</p>
-    <div class="philo">
-      <blockquote>nejsou stroje na výkon. Kdo k nim tak dlouhodobě přistupuje, brzy řeší víc poruch než vytoužených úspěchů.</blockquote>
-      <blockquote>jsou propojené nádoby. Proto je potřeba pečovat o obě.</blockquote>
-      <blockquote>jsou jediný kus oblečení, který budeme nosit do konce života. Tak ať se nám v něm žije co nejlépe.</blockquote>
-    </div>
-
-    <div class="ginkgo">
-      <img src="assets/logo-mark.webp" alt="List ginkga – symbol Pure Well">
+    <div class="authentic">
+      <img src="assets/logo-mark.webp" alt="" aria-hidden="true">
       <div>
-        <h3>Proč list ginkga</h3>
-        <p>Ginkgo biloba je jeden z nejstarších stromů na Zemi. Roste na planetě přes 200 milionů let a jednotlivé stromy se dožívají i více než tisíce let. Je symbolem trpělivosti, moudrosti a obnovy.</p>
-        <p>V Hirošimě přežilo několik ginkg atomový výbuch v roce 1945, přestože stála jen kilometr či dva od jeho středu. Brzy poté znovu vyrašila a rostou dodnes.</p>
-        <p>Jeho list připomíná dvě mozkové hemisféry a jméno <em>biloba</em> znamená „dvoulaločný“: dvě poloviny, které vyrůstají z jednoho stonku. Přesně tak vnímám tělo a mysl. A strom, který přežil nemožné a znovu vypučel, je pro mě obrazem toho, co je možné i u člověka.</p>
+        <span class="eyebrow">Můj přístup</span>
+        <h3>Autentický přístup k recovery a práci s nervovým systémem</h3>
+        <p>Cestu zotavení znám zevnitř, ne jen z učebnic. Z vlastní zkušenosti čerpám hloubku, kterou se nelze naučit na žádném kurzu, a propojuji ji s celým svým odborným portfoliem. Díky tomu ke každému klientovi přistupuji jako k celku: tělo, nervový systém i život, který žije.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-dark brand-sec" id="pure-well">
+  <div class="wrap grid-2">
+    <div>
+      <span class="eyebrow">O brandu Pure Well</span>
+      <h2>Cítit se opravdu dobře</h2>
+      <blockquote class="brand-quote">„Péče o zdraví není výdaj. Je to ta nejlepší investice do tvé budoucnosti.“</blockquote>
+      <p>Pure Well vznikl z přesvědčení, že cítit se dobře není luxus, ale standard. Ve vlastním těle, ve vlastní hlavě i ve vlastním životě. Ať se připravuješ na závod, zotavuješ se, nebo si jen potřebuješ odpočinout.</p>
+    </div>
+    <figure class="framed-photo dark">
+      <img src="assets/foto/gladiator-race.jpg" alt="Ivana s medailí po závodě Gladiator Race" loading="lazy" style="object-position:center 35%">
+      <figcaption>Gladiator Race. Výzvy pro mě nejsou překážkou, ale cestou.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="bg-linen restart" id="zacatek">
+  <div class="wrap">
+    <div class="restart-grid">
+      <img class="restart-leaf" src="assets/logo-mark.webp" alt="List ginkga – symbol Pure Well" loading="lazy">
+      <div>
+        <span class="eyebrow">Symbol Pure Well</span>
+        <h2>Nikdy není pozdě začít</h2>
+        <p class="restart-lead">Lidské tělo má neuvěřitelnou schopnost obnovy a adaptace. A stejně tak i mysl. Stačí touha a chuť objevit svůj plný potenciál.</p>
+        <p>Ginkgo biloba roste na Zemi přes 200 milionů let a je jedním z nejstarších stromů vůbec. V Hirošimě přežilo několik ginkg atomový výbuch v roce 1945, přestože stála jen kilometr či dva od jeho středu. Brzy poté znovu vyrašila a rostou dodnes.</p>
+        <p>Jeho list připomíná dvě mozkové hemisféry a jméno <em>biloba</em> znamená „dvoulaločný“: dvě poloviny, které vyrůstají z jednoho stonku. Proto je pro mě ginkgo symbolem <strong>duality těla a mysli</strong> a zároveň <strong>obnovy</strong>: připomínkou toho, že i po tom nejtěžším se dá znovu vyrůst.</p>
       </div>
     </div>
   </div>
