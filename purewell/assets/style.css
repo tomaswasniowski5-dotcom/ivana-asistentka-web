@@ -457,4 +457,7 @@ details.expert .body h4:first-child { margin-top: 0; }
 @media (max-width: 860px) { .offers-sec::before { width: 320px; height: 320px; right: -120px; top: -60px; } }
 
 /* Podstránka masáže – věta „Můj cíl“ */
-.aim { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(20px, 2vw, 23px); line-height: 1.4; color: var(--gold-deep); border-left: 2px solid var(--gold); padding: 2px 0 2px 18px; margin: -6px 0 24px; max-width: 600px; }
+.aim { position: relative; font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(19px, 1.9vw, 22px); line-height: 1.45; color: #6f5230; padding: 16px 40px 16px 22px; margin: -4px 0 26px; max-width: 640px;
+  background: linear-gradient(90deg, rgba(210,177,124,.34) 0%, rgba(227,196,143,.22) 45%, rgba(227,196,143,0) 100%); }
+.aim::before, .aim::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, rgba(176,138,82,.7), rgba(176,138,82,.25) 55%, transparent); }
+.aim::before { top: 0; } .aim::after { bottom: 0; }
