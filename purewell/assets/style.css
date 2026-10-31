@@ -470,3 +470,23 @@ details.expert .body h4:first-child { margin-top: 0; }
 .btn.gold:hover { background: var(--espresso); border-color: var(--espresso); color: var(--cream); }
 .page-hero .btns { gap: 10px; }
 .page-hero .btns .btn { padding: 14px 18px; font-size: 12.5px; letter-spacing: .05em; }
+
+/* Přepínač jazyků CZ / EN */
+.site-header .wrap { gap: 18px; }
+.site-header .brand { margin-right: auto; }
+.site-header .nav { order: 2; }
+.lang-switch { order: 3; display: flex; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--gold-soft); border-radius: 999px; background: rgba(255,252,246,.7); flex-shrink: 0; }
+.site-header .menu-btn { order: 4; }
+.lang-switch a { display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font: 600 12px var(--sans); letter-spacing: .08em; color: var(--muted); text-decoration: none; transition: background .2s, color .2s; }
+.lang-switch a:hover { color: var(--espresso); background: var(--linen); }
+.lang-switch a.on { background: var(--espresso); color: var(--cream); }
+.lang-switch svg { width: 18px; height: 12px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0,0,0,.12); flex-shrink: 0; }
+@media (max-width: 860px) { .site-header .wrap { gap: 10px; } .lang-switch a { padding: 5px 8px; } }
+@media (max-width: 380px) { .lang-switch a span { display: none; } }
+.brand span { white-space: nowrap; }
+@media (max-width: 480px) {
+  .brand { gap: 7px; } .brand img { width: 28px; height: 28px; }
+  .brand span { font-size: 14px; letter-spacing: .2em; }
+  .site-header .menu-btn { padding: 7px 12px; font-size: 12px; }
+  .lang-switch a { padding: 5px 7px; gap: 5px; font-size: 11px; }
+}
