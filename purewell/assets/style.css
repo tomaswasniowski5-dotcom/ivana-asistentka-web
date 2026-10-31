@@ -464,7 +464,8 @@ details.expert .body h4:first-child { margin-top: 0; }
 
 /* Zlatý akcent v úvodu a zlaté tlačítko */
 .lead-accent { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(20px, 2vw, 23px); line-height: 1.4; color: var(--gold-deep); margin-top: 8px !important; max-width: 640px; }
-.page-hero .lead + .lead { margin-top: 14px; }
+.page-hero .lead + .lead, .page-hero .aim + .lead { margin-top: 14px; }
+.page-hero .lead + .aim { margin-top: 16px; }
 .btn.gold { background: var(--gold-deep); border-color: var(--gold-deep); color: var(--cream); }
 .btn.gold:hover { background: var(--espresso); border-color: var(--espresso); color: var(--cream); }
 .page-hero .btns { gap: 10px; }
