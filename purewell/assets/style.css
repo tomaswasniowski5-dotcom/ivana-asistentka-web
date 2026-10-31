@@ -455,3 +455,6 @@ details.expert .body h4:first-child { margin-top: 0; }
 .offer-list li a:hover small { color: #d2b17c; }
 .offer-list li a:hover .arr { background: var(--gold); transform: translateX(3px); }
 @media (max-width: 860px) { .offers-sec::before { width: 320px; height: 320px; right: -120px; top: -60px; } }
+
+/* Podstránka masáže – věta „Můj cíl“ */
+.aim { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(20px, 2vw, 23px); line-height: 1.4; color: var(--gold-deep); border-left: 2px solid var(--gold); padding: 2px 0 2px 18px; margin: -6px 0 24px; max-width: 600px; }
