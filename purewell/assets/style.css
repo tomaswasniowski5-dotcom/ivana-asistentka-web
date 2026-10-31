@@ -461,3 +461,11 @@ details.expert .body h4:first-child { margin-top: 0; }
   background: linear-gradient(90deg, rgba(210,177,124,.34) 0%, rgba(227,196,143,.22) 45%, rgba(227,196,143,0) 100%); }
 .aim::before, .aim::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, rgba(176,138,82,.7), rgba(176,138,82,.25) 55%, transparent); }
 .aim::before { top: 0; } .aim::after { bottom: 0; }
+
+/* Zlatý akcent v úvodu a zlaté tlačítko */
+.lead-accent { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(20px, 2vw, 23px); line-height: 1.4; color: var(--gold-deep); margin-top: 8px !important; max-width: 640px; }
+.page-hero .lead + .lead { margin-top: 14px; }
+.btn.gold { background: var(--gold-deep); border-color: var(--gold-deep); color: var(--cream); }
+.btn.gold:hover { background: var(--espresso); border-color: var(--espresso); color: var(--cream); }
+.page-hero .btns { gap: 10px; }
+.page-hero .btns .btn { padding: 14px 18px; font-size: 12.5px; letter-spacing: .05em; }
